@@ -1,0 +1,4 @@
+- [HUGS](https://huggingface.co/docs/hugs/how-to/cloud/digital-ocean) and [GPU droplets](https://www.digitalocean.com/products/gpu-droplets)
+- [RFP response generation](https://github.com/run-llama/llama_parse/blob/main/examples/report_generation/rfp_response/generate_rfp.ipynb)
+- table extraction
+- uv and python standalone redistributable : https://github.com/astral-sh/uv/issues/3061
