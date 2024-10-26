@@ -4,5 +4,7 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-> Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
-{: .prompt-tip }
+[WiseProbe](https://wiseprobe.io) is an independent research initiative that builds data tools in support of scientific advancement and the public good.
+
+
+Contact: [contact@wiseprobe.io](mailto:contact@wiseprobe.io)
