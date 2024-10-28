@@ -16,7 +16,7 @@ timezone:
 
 title: WiseProbe Blog # the main title
 
-tagline: blog about making sense of data # it will display as the subtitle
+tagline: A blog about making sense of your data # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   Blog and portfolio focused on
