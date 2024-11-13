@@ -74,7 +74,7 @@ Ensure to:
 
 Use the following JSON structure:
 
-\u0060\u0060\u0060 json
+# json structure
 {
  "Personal Information": {
     "Name": " ",
@@ -107,7 +107,7 @@ Use the following JSON structure:
   // A list of skills or fields that the person has experience with
   ],
 }
-\u0060\u0060\u0060
+# end json structure
 
 Here is the text of the resume:
 
