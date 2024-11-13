@@ -7,7 +7,7 @@ tags: [technology,llm,generative ai,information extraction]
 
 Resume-parsing is a great use case for generative AI. In this post, we demonstrate how local LLMs like [Meta's Llama-3.1](https://ai.meta.com/blog/meta-llama-3-1/) can extract useful information from resumes to make them more findable. We will use the [OnPrem.LLM](https://amaiya.github.io/onprem/) package, a handy Python toolkit for working with LLMs.
 
-By default [OnPrem.LLM](https://amaiya.github.io/onprem/) uses the [Llama-cpp -python](https://github.com/abetlen/llama-cpp-python) under the hood. However, OnPrem.LLM can be used with a number of local LLM tools like [Ollama and vLLM](https://amaiya.github.io/onprem/#connecting-to-llms-served-through-rest-apis).
+By default OnPrem.LLM uses the [Llama-cpp -python](https://github.com/abetlen/llama-cpp-python) under the hood. However, OnPrem.LLM can be used with a number of local LLM tools like [Ollama and vLLM](https://amaiya.github.io/onprem/#connecting-to-llms-served-through-rest-apis).
 
 
 
@@ -15,12 +15,14 @@ By default [OnPrem.LLM](https://amaiya.github.io/onprem/) uses the [Llama-cpp -p
 
 The choice of model is important, as certain local LLMs struggle with this task.  For instance, [Mistral-7B](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3) doesn't seem to perform that well on resume-parsing tasks in our experiments. By contrast, the [Llama-3.1-8B model](https://huggingface.co/meta-llama/Llama-3.1-8B) from Meta performs quite nicely.
 
-Llama.cpp  (and, by extension, OnPrem.LLM) requires models in GGUF format. There are different GGUF instances of this Llama-3.1-8B on the Hugging Face model hub, and we will use the [one from LM Studio](https://huggingface.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF). When selecting a model that is different than the default ones in OnPrem.LLM, it is important to inspect the model’s home page and identify the correct prompt format. The prompt format for this model is located [here](https://huggingface.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF#prompt-template), and we will supply it directly to the LLM constructor along with the URL to the specific model file we want (i.e., `Meta-Llama-3.1-8B-Instruct-Q4_K_M`.gguf). We will offload layers to our GPU(s) to speed up inference using the `n_gpu_layers` parameter. (For more information on GPU acceleration, see here.) For the purposes of this notebook, we also supply temperature=0 so that there is no variability in outputs. You can increase this value for more creativity in the outputs. Note that you can change the system prompt (i.e., “You are a super-intelligent helpful assistant…”) to fit your needs.
+Llama.cpp  (and, by extension, OnPrem.LLM) requires models in GGUF format. There are different GGUF instances of Llama-3.1-8B on the Hugging Face model hub, and we will use the [one from LM Studio](https://huggingface.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF).
 
+When selecting a model that is different than the default ones in OnPrem.LLM, it is important to inspect the model’s home page and identify the correct prompt format. The prompt format for this model is located [here](https://huggingface.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF#prompt-template), and we will supply it directly to the LLM constructor along with the URL to the specific model file we want (i.e., `Meta-Llama-3.1-8B-Instruct-Q4_K_M`.gguf). We will offload layers to our GPU(s) to speed up inference using the `n_gpu_layers` parameter. (For more information on GPU acceleration, see [here](https://amaiya.github.io/onprem/#speeding-up-inference-using-a-gpu).) For the purposes of this notebook, we also supply temperature=0 so that there is no variability in outputs. You can increase this value for more creativity in the outputs. Note that you can change the system prompt (i.e., “You are a super-intelligent helpful assistant…”) to fit your needs.
 
-When using local LLMs, OnPrem.LLM requires models in GGUF format. In this example we will load a GGUF LLama-3.1 model from LM Studio.
 
 ```python
+# setup the prompt template for this model
+
 from onprem import LLM
 import os
 prompt_template = """<|start_header_id|>system<|end_header_id|>
@@ -30,6 +32,7 @@ You are a super-intelligent helpful assistant that executes instructions.<|eot_i
 {prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
 """
 
+# load the model
 llm = LLM(model_url='https://huggingface.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf',
           prompt_template= prompt_template,
           n_gpu_layers=-1,
@@ -37,17 +40,15 @@ llm = LLM(model_url='https://huggingface.co/lmstudio-community/Meta-Llama-3.1-8B
           verbose=False)
 ```
 
-## STEP 2: Download a Resume
+## STEP 2: Download a Resume and Extract Text
 
-We will use my CV and consider the first page as the "resume" in this example. Type this at a command prompt to downlaod the CV or try it with your own resume.
+We will use my CV and consider the first page as the "resume" in this example. Type this at a command prompt to download the CV or try it with your own resume (or prepend it with a `!` if running in a notebook environment).
 
 ```sh
-!wget https://arun.maiya.net/asmcv.pdf -O /tmp/cv.pdf
+wget https://arun.maiya.net/asmcv.pdf -O /tmp/cv.pdf
 ```
 
-## STEP 3: Load Text from the PDF Resume
-
-The PDF we just downloaded is in PDF format, so we'll extract the text from it using the `load_single_document` function in OnPrem.LLM.
+The PDF we just downloaded is in PDF format, so we'll extract the text from it using the `load_single_document` function, which can extract text from a variety of document formats (e.g., PDF, DOC/DOCX, PPT/PPTX). Scanned PDFs will be automatically OCR'ed, if needed.
 
 ```python
 from onprem.ingest import load_single_document
@@ -117,7 +118,7 @@ Here is the text of the resume:
 
 ## STEP 5: Parse a Resume
 
-Finally, we will insert the text of the resume into the prompt and send it to the LLM.
+Finally, we will insert the text of the resume into the prompt and send it to the LLM to extract the information we want.
 
 ```python
 output = llm.prompt(prompt.replace('---RESUMETXT---', resume_text))
