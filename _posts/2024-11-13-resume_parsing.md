@@ -57,7 +57,7 @@ resume_text = docs[0].page_content # we'll only consider the first page of CV as
 ```
 
 
-## STEP 4: Construct a Prompt for Resume-Parsing
+## STEP 3: Construct a Prompt for Resume-Parsing
 
 We will develop a prompt that extracts information from resumes as a JSON string. We will include a placeholder for the resume text called `--RESUMETXT--`, which will be replaced with whatever resume we are anlayzing when we execute the prompt.
 
@@ -116,7 +116,7 @@ Here is the text of the resume:
 """
 ```
 
-## STEP 5: Parse a Resume
+## STEP 4: Parse a Resume
 
 Finally, we will insert the text of the resume into the prompt and send it to the LLM to extract the information we want.
 
