@@ -11,7 +11,7 @@ By default [OnPrem.LLM](https://amaiya.github.io/onprem/) uses the [Llama-cpp -p
 
 
 
-# STEP 1: Load the Llama 3.1 Model
+## STEP 1: Load the Llama 3.1 Model
 
 The choice of model is important, as certain local LLMs struggle with this task.  For instance, [Mistral-7B](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3) doesn't seem to perform that well on resume-parsing tasks in our experiments. By contrast, the [Llama-3.1-8B model](https://huggingface.co/meta-llama/Llama-3.1-8B) from Meta performs quite nicely.
 
@@ -37,15 +37,15 @@ llm = LLM(model_url='https://huggingface.co/lmstudio-community/Meta-Llama-3.1-8B
           verbose=False)
 ```
 
-# STEP 2: Download a Resume
+## STEP 2: Download a Resume
 
 We will use my CV and consider the first page as the "resume" in this example. Type this at a command prompt to downlaod the CV or try it with your own resume.
 
 ```sh
-wget https://arun.maiya.net/asmcv.pdf -O /tmp/cv.pdf
+!wget https://arun.maiya.net/asmcv.pdf -O /tmp/cv.pdf
 ```
 
-# STEP 3: Load Text from the PDF Resume
+## STEP 3: Load Text from the PDF Resume
 
 The PDF we just downloaded is in PDF format, so we'll extract the text from it using the `load_single_document` function in OnPrem.LLM.
 
@@ -56,7 +56,7 @@ resume_text = docs[0].page_content # we'll only consider the first page of CV as
 ```
 
 
-# STEP 4: Construct a Prompt for Resume-Parsing
+## STEP 4: Construct a Prompt for Resume-Parsing
 
 We will develop a prompt that extracts information from resumes as a JSON string. We will include a placeholder for the resume text called `--RESUMETXT--`, which will be replaced with whatever resume we are anlayzing when we execute the prompt.
 
@@ -74,7 +74,7 @@ Ensure to:
 
 Use the following JSON structure:
 
-```json
+`` ```json ``
 {
  "Personal Information": {
     "Name": " ",
@@ -107,7 +107,7 @@ Use the following JSON structure:
   // A list of skills or fields that the person has experience with
   ],
 }
-```
+`` ``` ``
 
 Here is the text of the resume:
 
@@ -115,7 +115,7 @@ Here is the text of the resume:
 """
 ```
 
-# STEP 5: Parse a Resume
+## STEP 5: Parse a Resume
 
 Finally, we will insert the text of the resume into the prompt and send it to the LLM.
 
