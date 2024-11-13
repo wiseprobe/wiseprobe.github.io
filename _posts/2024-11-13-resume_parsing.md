@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Parsing Resumes With Local LLMs
-categories: [Blog]
-tags: [technology,llm,generative ai,information extraction]
+categories: [Technology,AI]
+tags: [llm,generative ai,information extraction]
 ---
 
 Resume-parsing is a great use case for generative AI. In this post, we demonstrate how local LLMs like [Meta's Llama-3.1](https://ai.meta.com/blog/meta-llama-3-1/) can extract useful information from resumes to make them more findable. We will use the [OnPrem.LLM](https://amaiya.github.io/onprem/) package, a handy Python toolkit for working with LLMs.
