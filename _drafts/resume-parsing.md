@@ -187,6 +187,6 @@ d.keys()
 ```
 
 
-For more information, see the [OnPrem.LLM documentation](https://amaiya.github.io/onprem/) and give it a star find it helpful.
+For more information, see the [OnPrem.LLM documentation](https://amaiya.github.io/onprem/) and [repo](https://github.com/amaiya/onprem).
 
 
