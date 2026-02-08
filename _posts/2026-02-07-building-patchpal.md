@@ -5,15 +5,18 @@ categories: [Technology, AI]
 tags: [ai agents, coding assistant, python, llm, software engineering]
 ---
 
+
+![PatchPal](/images/posts/patchpal/patchpal-header.png)
+
 > Originally published on [Towards AI](https://pub.towardsai.net/building-a-lean-claude-code-style-agent-in-python-40ff99501cf9)
 
 LLM coding agents may look complex, but fundamentally they're just a loop, some tools, and an LLM doing the real work.
 
 Agentic coding assistants are now widespread (e.g., Aider, Claude Code, OpenCode). After spending some time with Claude Code and OpenCode, I wanted something I could run locally, inspect end-to-end, and modify and extend without wading through a large framework.
 
-That curiosity led to developing an open-source, Python-based, agentic coding assistant called [PatchPal](https://github.com/amaiya/patchpal).
+That curiosity led to developing an open-source, Python-based, agentic coding assistant called **[PatchPal](https://github.com/amaiya/patchpal)**.
 
-[PatchPal]((https://github.com/amaiya/patchpal) is a lean Claude Code–inspired AI coding agent implemented purely in Python intended to help with things like:
+[PatchPal](https://github.com/amaiya/patchpal) is a lean Claude Code–inspired AI coding agent implemented purely in Python intended to help with things like:
 
 - Building, debugging, and modifying software
 - Data analysis and visualization, including data curation through web scraping and API interactions
@@ -89,7 +92,7 @@ ollama serve
 patchpal --model ollama_chat/gpt-oss:20b
 ```
 
-Without the larger context window, agent workflows will fail in subtle ways — this is the most common Ollama pitfall. Moreover, not all Ollama models will work well in tool-calling agentic workflows. Some models that Ollama recommends are [gpt-oss](https://ollama.com/library/gpt-oss) and[qwen3-coder](https://ollama.com/library/qwen3-coder).
+Without the larger context window, agent workflows will fail in subtle ways — this is the most common Ollama pitfall. Moreover, not all Ollama models will work well in tool-calling agentic workflows. Some models that Ollama recommends are [gpt-oss](https://ollama.com/library/gpt-oss) and [qwen3-coder](https://ollama.com/library/qwen3-coder).
 
 ### Option 3: Local models with vLLM
 
@@ -123,7 +126,7 @@ In the example below, we build a Streamlit dashboard of Supreme Court cases usin
 
 ### Fixing Bugs
 
-IEEE Spectrum recently published an article titled, "[AI Coding Assistants are Getting Worse.](https://spectrum.ieee.org/ai-coding-degrades)" However, we find that the experiments in the article do not support the central claim of the author. The example below demonstrates a solution to the following code issue that the author claims is not reliably solvable by current LLMs:
+IEEE Spectrum recently published an article titled, "*[AI Coding Assistants are Getting Worse.](https://spectrum.ieee.org/ai-coding-degrades)*" However, we find that the experiments in the article do not support the central claim of the author. The example below demonstrates a solution to the following code issue that the author claims is not reliably solvable by current LLMs:
 
 ```python
 # broken code
