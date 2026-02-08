@@ -12,9 +12,9 @@ tags: [ai agents, coding assistant, python, llm, software engineering]
 
 LLM coding agents may look complex, but fundamentally they're just a loop, some tools, and an LLM doing the real work.
 
-Agentic coding assistants are now widespread (e.g., Aider, Claude Code, Codex, OpenCode). After spending some time with Claude Code and OpenCode, I wanted something I could run locally, inspect end-to-end, and modify and extend without wading through a large framework.
+Agentic coding assistants are now widespread (e.g., Aider, Claude Code, Codex, OpenCode). After spending some time with Claude Code, I wanted something I could run with both local and cloud models, understand end-to-end, and modify/extend without wading through a large framework.
 
-That curiosity led to developing an open-source, Python-based, agentic coding assistant called **[PatchPal](https://github.com/wiseprobe/patchpal)**.
+That curiosity led to developing an open-source, Python-based, agentic coding assistant I call **[PatchPal](https://github.com/wiseprobe/patchpal)**.
 
 [PatchPal](https://github.com/wiseprobe/patchpal) is a lean Claude Code–inspired AI coding agent implemented purely in Python intended to help with things like:
 
@@ -23,21 +23,13 @@ That curiosity led to developing an open-source, Python-based, agentic coding as
 - Researching issues and reporting synthesized findings (e.g., web search, log file analysis)
 - Automating tasks and solving problems with skills, tools, and on-the-fly code generation/execution
 
-The permission-based interaction model is aligned with that used by Claude Code, providing a familiar workflow.
+The permission-based interaction model is aligned with that used by Claude Code and should familiar to users of terminal-based assistants.
 
 Unlike many larger coding agents, PatchPal is intentionally small and transparent:
 
 ```bash
 $ ls patchpal
-__init__.py
-agent.py
-cli.py
-context.py
-permissions.py
-skills.py
-system_prompt.md
-tool_schema.py
-tools/
+__init__.py agent.py cli.py context.py permissions.py skills.py system_prompt.md tool_schema.py tools/
 ```
 
 Despite its small size, PatchPal includes support for [custom tools](https://github.com/wiseprobe/patchpal?tab=readme-ov-file#custom-tools), [skills](https://github.com/wiseprobe/patchpal?tab=readme-ov-file#skills-system), [web browsing](https://github.com/wiseprobe/patchpal?tab=readme-ov-file#web-capabilities-requires-permission), and autonomous ["ralph wiggum" loops](https://github.com/wiseprobe/patchpal/tree/main/examples/ralph).
