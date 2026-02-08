@@ -6,7 +6,7 @@ tags: [ai agents, coding assistant, python, llm, software engineering]
 ---
 
 
-![PatchPal](/images/posts/patchpal/patchpal-header.png)
+![PatchPal](/images/posts/patchpal/volodymyr-dobrovolskyy-KrYbarbAx5s-unsplash.jpg)
 
 > Originally published on [Towards AI](https://pub.towardsai.net/building-a-lean-claude-code-style-agent-in-python-40ff99501cf9)
 
