@@ -14,7 +14,7 @@ LLM coding agents may look complex, but fundamentally they're just a loop, some 
 
 Agentic coding assistants are now widespread (e.g., Aider, Claude Code, Codex, OpenCode). After spending some time with Claude Code, I wanted something I could run with both local and cloud models, understand end-to-end, and modify/extend without wading through a large framework.
 
-That curiosity led to developing an open-source, Python-based, agentic coding assistant I call **[PatchPal](https://github.com/wiseprobe/patchpal)**.
+That curiosity led to developing an open-source, Python-based, agentic coding assistant called [PatchPal](https://github.com/wiseprobe/patchpal). (I asked it to name itself, as nothing better came to mind.)
 
 [PatchPal](https://github.com/wiseprobe/patchpal) is a lean Claude Code–inspired AI coding agent implemented purely in Python intended to help with things like:
 
@@ -23,7 +23,7 @@ That curiosity led to developing an open-source, Python-based, agentic coding as
 - Researching issues and reporting synthesized findings (e.g., web search, log file analysis)
 - Automating tasks and solving problems with skills, tools, and on-the-fly code generation/execution
 
-The permission-based interaction model is aligned with that used by Claude Code and should familiar to users of terminal-based assistants.
+The permission-based interaction model is aligned with that used by Claude Code and should be familiar to users of terminal-based assistants.
 
 Unlike many larger coding agents, PatchPal is intentionally small and transparent:
 
