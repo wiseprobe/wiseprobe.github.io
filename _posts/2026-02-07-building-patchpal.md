@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Building a Lean Claude Code-Style Agent in Python
+title: Building an Open-Source Claude Code-Style Agent in Python
 categories: [Technology, AI]
 tags: [ai agents, coding assistant, python, llm, software engineering]
 ---
@@ -12,7 +12,7 @@ tags: [ai agents, coding assistant, python, llm, software engineering]
 
 LLM coding agents may look complex, but fundamentally they're just a loop, some tools, and an LLM doing the real work.
 
-Agentic coding assistants are now widespread (e.g., Aider, Claude Code, OpenCode). After spending some time with Claude Code and OpenCode, I wanted something I could run locally, inspect end-to-end, and modify and extend without wading through a large framework.
+Agentic coding assistants are now widespread (e.g., Aider, Claude Code, Codex, OpenCode). After spending some time with Claude Code and OpenCode, I wanted something I could run locally, inspect end-to-end, and modify and extend without wading through a large framework.
 
 That curiosity led to developing an open-source, Python-based, agentic coding assistant called **[PatchPal](https://github.com/wiseprobe/patchpal)**.
 
@@ -39,6 +39,8 @@ system_prompt.md
 tool_schema.py
 tools/
 ```
+
+Despite its small size, PatchPal includes support for [custom tools](https://github.com/wiseprobe/patchpal?tab=readme-ov-file#custom-tools), [skills](https://github.com/wiseprobe/patchpal?tab=readme-ov-file#skills-system), [web browsing](https://github.com/wiseprobe/patchpal?tab=readme-ov-file#web-capabilities-requires-permission), and autonomous ["ralph wiggum" loops](https://github.com/wiseprobe/patchpal/tree/main/examples/ralph).
 
 ## How to Install
 
