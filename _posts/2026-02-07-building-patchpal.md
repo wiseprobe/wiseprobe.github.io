@@ -14,9 +14,9 @@ LLM coding agents may look complex, but fundamentally they're just a loop, some 
 
 Agentic coding assistants are now widespread (e.g., Aider, Claude Code, OpenCode). After spending some time with Claude Code and OpenCode, I wanted something I could run locally, inspect end-to-end, and modify and extend without wading through a large framework.
 
-That curiosity led to developing an open-source, Python-based, agentic coding assistant called **[PatchPal](https://github.com/amaiya/patchpal)**.
+That curiosity led to developing an open-source, Python-based, agentic coding assistant called **[PatchPal](https://github.com/wiseprobe/patchpal)**.
 
-[PatchPal](https://github.com/amaiya/patchpal) is a lean Claude Code–inspired AI coding agent implemented purely in Python intended to help with things like:
+[PatchPal](https://github.com/wiseprobe/patchpal) is a lean Claude Code–inspired AI coding agent implemented purely in Python intended to help with things like:
 
 - Building, debugging, and modifying software
 - Data analysis and visualization, including data curation through web scraping and API interactions
@@ -154,7 +154,7 @@ When generating a bar chart of the top 5 downloaded Python packages, the agent w
 
 ## Skills: Reusable Agent Workflows
 
-PatchPal also supports [agent skills](https://github.com/amaiya/patchpal/tree/main/examples/skills), an open format for reusable, named workflows written in Markdown.
+PatchPal also supports [agent skills](https://github.com/wiseprobe/patchpal/tree/main/examples/skills), an open format for reusable, named workflows written in Markdown.
 
 You can create new skills for your agent using the `skills-creator` skill and then simply drop them to the `~/.patchpal/skills` folder for PatchPal to use them. (Anthropic also maintains a [public repository](https://github.com/anthropics/skills) of more agent skills, all of which are compatible with PatchPal.)
 
@@ -163,7 +163,7 @@ You can create new skills for your agent using the `skills-creator` skill and th
 
 ## Creating Your Own Tools
 
-While skills provide the agent with instructions and templates to follow, [custom tools](https://github.com/amaiya/patchpal/tree/main/examples/tools) extend the agent's capabilities with executable Python functions that run on demand.
+While skills provide the agent with instructions and templates to follow, [custom tools](https://github.com/wiseprobe/patchpal/tree/main/examples/tools) extend the agent's capabilities with executable Python functions that run on demand.
 
 Drop a `.py` file in `~/.patchpal/tools/`, and PatchPal automatically discovers and integrates your functions at startup. The agent can then call them just like any built-in tool.
 
@@ -260,7 +260,7 @@ Custom tools work in both the terminal CLI (auto-discovered) and Python API (pas
 
 PatchPal can also be used programmatically from Python scripts or a REPL, giving you full agent capabilities with a simple API.
 
-In the [Python API](https://github.com/amaiya/patchpal?tab=readme-ov-file#python-api), custom tools can be supplied directly to `create_agent`. In the example below, we provide the agent with a custom tool for searching GitHub repositories.
+In the [Python API](https://github.com/wiseprobe/patchpal?tab=readme-ov-file#python-api), custom tools can be supplied directly to `create_agent`. In the example below, we provide the agent with a custom tool for searching GitHub repositories.
 
 ```python
 from patchpal.agent import create_agent
@@ -372,4 +372,4 @@ Finally, with support for agent skills and custom tools, and guarded by an expli
 
 ## Documentation and Source Code
 
-The documentation and source code for PatchPal is available on GitHub: [https://github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
+The documentation and source code for PatchPal is available on GitHub: [https://github.com/wiseprobe/patchpal](https://github.com/wiseprobe/patchpal)
