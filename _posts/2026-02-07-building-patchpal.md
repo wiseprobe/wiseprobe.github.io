@@ -252,7 +252,7 @@ Custom tools work in both the terminal CLI (auto-discovered) and Python API (pas
 
 ## Accessing PatchPal via Python
 
-PatchPal can also be used programmatically from Python scripts or a REPL, giving you full agent capabilities with a simple API.
+Unlike many other coding assistants, PatchPal can also be used programmatically from Python scripts or a REPL, giving you full agent capabilities with a simple API. The Python API is quite handy when extending PatchPal to support things like [ralph wiggum loops](https://github.com/wiseprobe/patchpal/tree/main/examples/ralph).
 
 In the [Python API](https://github.com/wiseprobe/patchpal?tab=readme-ov-file#python-api), custom tools can be supplied directly to `create_agent`. In the example below, we provide the agent with a custom tool for searching GitHub repositories.
 
