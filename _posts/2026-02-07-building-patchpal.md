@@ -62,7 +62,7 @@ patchpal --model anthropic/claude-opus-4-5
 
 # Use OpenAI models
 export OPENAI_API_KEY=your_key_here
-patchpal --model openai/gpt-5.2  # or gpt-5-mini, gpt-4o, etc.
+patchpal --model openai/gpt-5.2-codex  # or gpt-5-mini, gpt-4o, etc.
 
 # Use any provider supported by the LiteLLM package
 # e.g., bedrock/anthropic.claude-sonnet-4-5-20250929-v1:0 on AWS
@@ -86,7 +86,7 @@ ollama serve
 patchpal --model ollama_chat/gpt-oss:20b
 ```
 
-Without the larger context window, agent workflows will fail in subtle ways — this is the most common Ollama pitfall. Moreover, not all Ollama models will work well in tool-calling agentic workflows. Some models that Ollama recommends are [gpt-oss](https://ollama.com/library/gpt-oss) and [qwen3-coder](https://ollama.com/library/qwen3-coder).
+Without the larger context window, agent workflows will fail in subtle ways — this is the most common Ollama pitfall. Moreover, not all Ollama models will work well in tool-calling agentic workflows. Some models that Ollama recommends are [gpt-oss](https://ollama.com/library/gpt-oss) and [qwen3-coder](https://ollama.com/library/qwen3-coder). I've been happy with gpt-oss. While the results are not always as gratifying as, say, Claude Sonnet or Opus, being completely free and also suitable for air-gapped environments is quite nice.
 
 ### Option 3: Local models with vLLM
 
