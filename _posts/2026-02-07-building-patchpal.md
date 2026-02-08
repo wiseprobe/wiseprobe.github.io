@@ -13,7 +13,7 @@ Agentic coding assistants are now widespread (e.g., Aider, Claude Code, OpenCode
 
 That curiosity led to developing an open-source, Python-based, agentic coding assistant called [PatchPal](https://github.com/amaiya/patchpal).
 
-PatchPal is a lean Claude Code–inspired AI coding agent implemented purely in Python intended to help with things like:
+[PatchPal]((https://github.com/amaiya/patchpal) is a lean Claude Code–inspired AI coding agent implemented purely in Python intended to help with things like:
 
 - Building, debugging, and modifying software
 - Data analysis and visualization, including data curation through web scraping and API interactions
@@ -34,7 +34,7 @@ permissions.py
 skills.py
 system_prompt.md
 tool_schema.py
-tools.py
+tools/
 ```
 
 ## How to Install
@@ -45,11 +45,11 @@ PatchPal is distributed via PyPI:
 pip install patchpal
 ```
 
-Supported on Linux, macOS, and Windows.
+Supported on Linux, macOS, and Windows. (Windows users are strongly recommended to use [WSL](https://learn.microsoft.com/en-us/windows/wsl/about).)
 
 ## Quick Start
 
-PatchPal supports both cloud models and local models via LiteLLM.
+PatchPal supports both cloud models and local models via [LiteLLM](https://github.com/BerriAI/litellm).
 
 ### Option 1: Cloud models (fastest to try)
 
@@ -76,7 +76,7 @@ PatchPal is compatible with every LLM provider supported by the LiteLLM package.
 
 ### Option 2: Local models with Ollama
 
-Ollama also works well, with one important requirement: you must increase the context window to at least 32K tokens.
+[Ollama](https://ollama.com/) also works well, with one important requirement: you must increase the context window to at least 32K tokens.
 
 ```bash
 # Required: increase context size
@@ -89,11 +89,11 @@ ollama serve
 patchpal --model ollama_chat/gpt-oss:20b
 ```
 
-Without the larger context window, agent workflows will fail in subtle ways — this is the most common Ollama pitfall. Moreover, not all Ollama models will work well in tool-calling agentic workflows. Some models that Ollama recommends are `gpt-oss` and `qwen3-coder`.
+Without the larger context window, agent workflows will fail in subtle ways — this is the most common Ollama pitfall. Moreover, not all Ollama models will work well in tool-calling agentic workflows. Some models that Ollama recommends are [gpt-oss](https://ollama.com/library/gpt-oss) and[qwen3-coder](https://ollama.com/library/qwen3-coder).
 
 ### Option 3: Local models with vLLM
 
-If you have larger GPU, you can also run models locally using vLLM in a more performant fashion.
+If you have larger GPU, you can also run models locally using [vLLM](https://github.com/vllm-project/vllm) in a more performant fashion.
 
 ```bash
 vllm serve openai/gpt-oss-20b \
@@ -116,14 +116,14 @@ Once running, PatchPal supports conversational interaction similar to Claude Cod
 
 ### Building Apps or New Features
 
-In the example below, we build a Streamlit dashboard of Supreme Court cases using web-scraped data from SCOTUSblog. The final app includes both the dashboard and a web-scraping script to collect and curate the data.
+In the example below, we build a Streamlit dashboard of Supreme Court cases using web-scraped data from [SCOTUSblog](https://www.scotusblog.com/). The final app includes both the dashboard and a web-scraping script to collect and curate the data.
 
 ![App-Building Example](/images/posts/patchpal/app-building-example.png)
 *App-Building Example*
 
 ### Fixing Bugs
 
-IEEE Spectrum recently published an article titled, "AI Coding Assistants are Getting Worse." However, we find that the experiments in the article do not support the central claim of the author. The example below demonstrates a solution to the following code issue that the author claims is not reliably solvable by current LLMs:
+IEEE Spectrum recently published an article titled, "[AI Coding Assistants are Getting Worse.](https://spectrum.ieee.org/ai-coding-degrades)" However, we find that the experiments in the article do not support the central claim of the author. The example below demonstrates a solution to the following code issue that the author claims is not reliably solvable by current LLMs:
 
 ```python
 # broken code
@@ -151,16 +151,16 @@ When generating a bar chart of the top 5 downloaded Python packages, the agent w
 
 ## Skills: Reusable Agent Workflows
 
-PatchPal also supports agent skills, an open format for reusable, named workflows written in Markdown.
+PatchPal also supports [agent skills](https://github.com/amaiya/patchpal/tree/main/examples/skills), an open format for reusable, named workflows written in Markdown.
 
-You can create new skills for your agent using the `skills-creator` skill and then simply drop them to the `~/.patchpal/skills` folder for PatchPal to use them. (Anthropic also maintains a public repository of more agent skills, all of which are compatible with PatchPal.)
+You can create new skills for your agent using the `skills-creator` skill and then simply drop them to the `~/.patchpal/skills` folder for PatchPal to use them. (Anthropic also maintains a [public repository](https://github.com/anthropics/skills) of more agent skills, all of which are compatible with PatchPal.)
 
 ![PatchPal's Configurable Skills System](/images/posts/patchpal/skills-system.png)
 *PatchPal's Configurable Skills System*
 
 ## Creating Your Own Tools
 
-While skills provide the agent with instructions and templates to follow, custom tools extend the agent's capabilities with executable Python functions that run on demand.
+While skills provide the agent with instructions and templates to follow, [custom tools](https://github.com/amaiya/patchpal/tree/main/examples/tools) extend the agent's capabilities with executable Python functions that run on demand.
 
 Drop a `.py` file in `~/.patchpal/tools/`, and PatchPal automatically discovers and integrates your functions at startup. The agent can then call them just like any built-in tool.
 
@@ -257,7 +257,7 @@ Custom tools work in both the terminal CLI (auto-discovered) and Python API (pas
 
 PatchPal can also be used programmatically from Python scripts or a REPL, giving you full agent capabilities with a simple API.
 
-In the Python API, custom tools can be supplied directly to `create_agent`. In the example below, we provide the agent with a custom tool for searching GitHub repositories.
+In the [Python API](https://github.com/amaiya/patchpal?tab=readme-ov-file#python-api), custom tools can be supplied directly to `create_agent`. In the example below, we provide the agent with a custom tool for searching GitHub repositories.
 
 ```python
 from patchpal.agent import create_agent
