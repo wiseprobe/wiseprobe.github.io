@@ -27,10 +27,11 @@
 #   icon: 'fab fa-stack-overflow'
 #   url:  ''                  # Fill with your stackoverflow homepage
 #
-# - type: bluesky
-#   icon: 'fa-brands fa-bluesky'
-#   url: ''                   # Fill with your Bluesky profile link
-#
+- type: bluesky
+  icon: 'fa-brands fa-bluesky'
+  url: 'https://bsky.app/profile/wiseprobe.bsky.social'
+
+
 # - type: reddit
 #   icon: 'fa-brands fa-reddit'
 #   url: ''                   # Fill with your Reddit profile link
