@@ -8,7 +8,6 @@ tags: [ai agents, coding assistant, python, llm, software engineering]
 
 <img src="/images/posts/patchpal/volodymyr-dobrovolskyy-KrYbarbAx5s-unsplash.jpg" alt="cat" width="400"/>
 
-> Originally published on [Towards AI](https://pub.towardsai.net/building-a-lean-claude-code-style-agent-in-python-40ff99501cf9)
 
 LLM coding agents may look complex, but fundamentally they're just a loop, some tools, and an LLM doing the real work.
 
