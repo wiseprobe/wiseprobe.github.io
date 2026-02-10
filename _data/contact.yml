@@ -3,8 +3,12 @@
 - type: github
   icon: "fab fa-github"
 
-- type: twitter
-  icon: "fa-brands fa-x-twitter"
+# - type: twitter
+#   icon: "fa-brands fa-x-twitter"
+
+- type: bluesky
+  icon: 'fa-brands fa-bluesky'
+  url: 'https://bsky.app/profile/wiseprobe.bsky.social'
 
 - type: email
   icon: "fas fa-envelope"
@@ -27,9 +31,6 @@
 #   icon: 'fab fa-stack-overflow'
 #   url:  ''                  # Fill with your stackoverflow homepage
 #
-- type: bluesky
-  icon: 'fa-brands fa-bluesky'
-  url: 'https://bsky.app/profile/wiseprobe.bsky.social'
 
 
 # - type: reddit
