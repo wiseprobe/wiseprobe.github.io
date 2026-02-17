@@ -165,7 +165,7 @@ The bash script works for the basic case. The plugin is cleaner if you only use 
 A Python API (or any proper programmatic API) makes the agent a **primitive**. You can inspect its state, control its execution, compose multiple agents, integrate into existing tools, and add arbitrary logic. You're not fighting with shell parsing or reverse-engineering markdown files—you're writing normal code.
 
 
-## So What?
+## Why This Matters
 
 Having a Python API means the agent becomes a **composable primitive** instead of a monolithic application.
 
@@ -218,9 +218,8 @@ ralph_loop(
 <img src="/images/posts/python_and_ralph/ralph_in_jupyter2.png" alt="Python and Coding Agents" width="800"/>
 
 
-While the examples above were simply invoking `ralph_loop` and doing things before and after,  you can, of course, also modify `ralph_loop` itself for fine-grained customization of the loop itself.
 
-Regardless, the common thread these examples is that they work because the agent is also a Python library you can import and compose:
+The common thread these examples is that they work because the agent is also a Python library you can import and compose:
 
 1. **Cost tracking** - `agent.cumulative_cost` tracks spending in real-time
 2. **Model switching** - Can swap models mid-session
@@ -230,9 +229,12 @@ Regardless, the common thread these examples is that they work because the agent
 Any of the above can be challenging when limited to an interacive terminal or desktop UI.
 
 
-## Cost Control
+## Beyond Ralph Loops
 
-Running 30+ iterations with Claude Opus 4.5 or Claude Sonnet 4.5 can get expensive. It's worth discussing costs a little further.
+
+The examples above were simply invoking `ralph_loop` and doing things before and after.  Armed with a Python API, you can, of course, also modify `ralph_loop` itself for fine-grained customization or perhaps not use a loop at all.
+
+Running 30+ iterations with Claude Opus 4.5 or Claude Sonnet 4.5 can get expensive. Let's look at cost optimization a little further.
 
 With a Python API, you have options:
 
@@ -264,7 +266,6 @@ if some_condition_is_met(initial_response, agent.cumulative_cost):
     agent = create_agent(model="anthropic/claude-haiku-4-5")
     ralph_loop(agent, prompt, completion_promise)
 ```
-
 
 These optimizations require programmatic access to cost tracking and model configuration. Usually impossible through a UI.
 
