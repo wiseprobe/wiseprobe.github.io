@@ -5,7 +5,7 @@ categories: [Technology, AI]
 tags: [ai agents, python, ralph wiggum, autopilot, api, patchpal]
 ---
 
-<img src="/images/posts/patchpal/ralph-wiggum.jpg" alt="Ralph Wiggum" width="400"/>
+<img src="/images/posts/python_and_ralph/python_and_coding_agent.png" alt="Python and Coding Agents" width="400"/>
 
 > "That's unpossible!" - Ralph Wiggum
 
