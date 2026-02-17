@@ -287,6 +287,6 @@ patchpal-autopilot --prompt "Build a simple Flask hello world app with a test. O
 python -c "from patchpal.autopilot import autopilot_loop; autopilot_loop(prompt='...', completion_promise='COMPLETE')"
 ```
 
-Code, docs, and examples are here: [github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
+Code, docs, and examples are available here: [github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
 
 ---
