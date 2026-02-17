@@ -13,7 +13,7 @@ There are dozens of different agentic coding assistants around right now.  From 
 
 However, these human-in-the-loop coding agents are typically mutually exclusive with more autonmous programmatic agent frameworks (e.g., smolagents, PydanticAI, CrewAI). 
 
-What if we outfitted a coding agent harness with a programmatic Python API? As it turns out, having a programmatic API in an agent harness is incredibly useful.
+What if we outfitted a coding agent harness with a programmatic Python API? As I'll explain below, having a programmatic API to a coding agent harness is incredibly useful.
 
 
 ## The API Problem
@@ -167,7 +167,7 @@ Having a Python API means the agent becomes a **composable primitive** instead o
 
 Things that might have been more challenging become much easier with a `ralph.py`:
 
-**Example 1: Jupyter Notebook Development**
+**Example: Jupyter Notebook Development**
 ```python
 # In a Jupyter cell
 from ralph import ralph_loop
@@ -178,9 +178,11 @@ ralph_loop(
     completion_promise="ANALYSIS_COMPLETE",
     max_iterations=10
 )
-
-# Shows plots inline, updates as agent iterates
+# immediately view results in 
 ```
+
+<img src="/images/posts/python_and_ralph/ralph_and_jupyter.png" alt="Python and Coding Agents" width="400"/>
+<img src="/images/posts/python_and_ralph/ralph_and_jupyter2.png" alt="Python and Coding Agents" width="400"/>
 
 **Example 2: Automated Code Review Fixes**
 ```python
