@@ -167,7 +167,7 @@ A Python API (or any proper programmatic API) makes the agent a **primitive**. Y
 
 ## Why This Matters
 
-Having a Python API means the agent becomes a **composable primitive** instead of a monolithic application.
+Having a [Python API](https://amaiya.github.io/patchpal/usage/python-api/) means the agent becomes a **composable primitive** instead of a monolithic application.
 
 Things that might have been more challenging become much easier with a `ralph.py`:
 
