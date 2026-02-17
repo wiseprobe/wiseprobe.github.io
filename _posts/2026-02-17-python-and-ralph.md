@@ -206,7 +206,7 @@ agent = create_agent(model="anthropic/claude-opus-4-5")
 response = agent.run(prompt)
 
 if some_condition_is_met: # e.g., cost threshold
-    # Switch to local model for refinement iterations
+    # Switch to cheaper model for refinement iterations
     agent = create_agent(model="anthropic/claude-haiku-4-5")
     ralph_loop(prompt, completion_promise, max_iterations=20)
 ```
