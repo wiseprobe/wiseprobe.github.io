@@ -181,8 +181,8 @@ ralph_loop(
 # immediately view results in 
 ```
 
-<img src="/images/posts/python_and_ralph/ralph_and_jupyter.png" alt="Python and Coding Agents" width="400"/>
-<img src="/images/posts/python_and_ralph/ralph_and_jupyter2.png" alt="Python and Coding Agents" width="400"/>
+<img src="/images/posts/python_and_ralph/ralph_in_jupyter.png" alt="Python and Coding Agents" width="400"/>
+<img src="/images/posts/python_and_ralph/ralph_in_jupyter2.png" alt="Python and Coding Agents" width="400"/>
 
 **Example 2: Automated Code Review Fixes**
 ```python
