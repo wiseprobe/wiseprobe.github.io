@@ -222,7 +222,9 @@ Any of the above can be challenging when limited to an interacive terminal or de
 
 ## Cost Control
 
-Running 30+ iterations with Claude Sonnet 4.5 can get expensive. It's worth discussin costs a little further. With a Python API, you have options:
+Running 30+ iterations with Claude Opus 4.5 or Claude Sonnet 4.5 can get expensive. It's worth discussing costs a little further.
+
+With a Python API, you have options:
 
 
 **Option 1: Budget Limits**
