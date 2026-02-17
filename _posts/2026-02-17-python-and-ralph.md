@@ -218,7 +218,9 @@ ralph_loop(
 <img src="/images/posts/python_and_ralph/ralph_in_jupyter2.png" alt="Python and Coding Agents" width="800"/>
 
 
-The common thread these examples is that they work because the agent is also a Python library you can import and compose:
+While the examples above were simply invoking `ralph_loop` and doing things before and after,  you can, of course, also modify `ralph_loop` itself for fine-grained customization of the loop itself.
+
+Regardless, the common thread these examples is that they work because the agent is also a Python library you can import and compose:
 
 1. **Cost tracking** - `agent.cumulative_cost` tracks spending in real-time
 2. **Model switching** - Can swap models mid-session
@@ -226,6 +228,7 @@ The common thread these examples is that they work because the agent is also a P
 3. **Context management** - `agent.context_manager` handles gives you more control over compaction and pruning for cost optimization
 
 Any of the above can be challenging when limited to an interacive terminal or desktop UI.
+
 
 ## Cost Control
 
@@ -283,6 +286,6 @@ patchpal-autopilot --prompt "Build a simple Flask hello world app with a test. O
 python -c "from patchpal.autopilot import autopilot_loop; autopilot_loop(prompt='...', completion_promise='COMPLETE')"
 ```
 
-Code and examples are here: [github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
+Code, docs, and examples are here: [github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
 
 ---
