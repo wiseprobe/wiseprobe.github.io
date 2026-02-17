@@ -171,7 +171,34 @@ Having a Python API means the agent becomes a **composable primitive** instead o
 
 Things that might have been more challenging become much easier with a `ralph.py`:
 
-**Example 1: Jupyter Notebook Development**
+**Example 1: Automated Code Review Fixes**
+```python
+# post-review.py - run after code review
+review_comments = load_review_comments()
+
+for comment in review_comments:
+    ralph_loop(
+        prompt=f"Address review comment: {comment.text} in {comment.file}:{comment.line}. Output: FIXED",
+        completion_promise="FIXED",
+        max_iterations=5
+    )
+```
+
+
+**Example 2: Cost-Optimized Development**
+```python
+# Use expensive model for first attempt, cheap model for iterations
+agent = create_agent(model="anthropic/claude-opus-4-5")
+response = agent.run(prompt)
+
+if some_condition_is_met: # e.g., cost threshold
+    # Switch to cheaper model for refinement iterations
+    agent = create_agent(model="anthropic/claude-haiku-4-5")
+    ralph_loop(prompt, completion_promise, max_iterations=20)
+```
+
+
+**Example 3: Jupyter Notebook Development**
 ```python
 # In a Jupyter cell
 from ralph import ralph_loop
@@ -190,30 +217,6 @@ ralph_loop(
 
 <img src="/images/posts/python_and_ralph/ralph_in_jupyter2.png" alt="Python and Coding Agents" width="800"/>
 
-**Example 2: Automated Code Review Fixes**
-```python
-# post-review.py - run after code review
-review_comments = load_review_comments()
-
-for comment in review_comments:
-    ralph_loop(
-        prompt=f"Address review comment: {comment.text} in {comment.file}:{comment.line}. Output: FIXED",
-        completion_promise="FIXED",
-        max_iterations=5
-    )
-```
-
-**Example 3: Cost-Optimized Development**
-```python
-# Use expensive model for first attempt, cheap model for iterations
-agent = create_agent(model="anthropic/claude-opus-4-5")
-response = agent.run(prompt)
-
-if some_condition_is_met: # e.g., cost threshold
-    # Switch to cheaper model for refinement iterations
-    agent = create_agent(model="anthropic/claude-haiku-4-5")
-    ralph_loop(prompt, completion_promise, max_iterations=20)
-```
 
 The common thread these examples is that they work because the agent is also a Python library you can import and compose:
 
