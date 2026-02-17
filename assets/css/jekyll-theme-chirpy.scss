@@ -137,7 +137,8 @@ div[class^='language-'] .code-header {
 
 /* Inline code improvements */
 code.highlighter-rouge {
-  background-color: #f1f5f9 !important;                /* Slate-100 - matches body bg */
+  background-color: #fef2f2 !important;                /* Red-50 - light pink background */
+  /* background-color: #f1f5f9 !important; */          /* Slate-100 - cool gray (alternative) */
   /* color: #059669 !important; */                     /* Emerald-600 - green text (alternative) */
   color: #dc2626 !important;                           /* Red-600 - red text */
   padding: 0.125rem 0.375rem;
