@@ -9,7 +9,7 @@ tags: [ai agents, python, ralph wiggum, autopilot, api, patchpal]
 
 > "That's unpossible!" - Ralph Wiggum
 
-There are dozens of different agentic coding assistants around right now.  From Claude Code (Anthropic) and Codex (Microsoft) to Kiro (Amazon) and Goose (Block).  Others open source agent harnesses include OpenCode, Aider, and Pi. 
+There are dozens of different agentic coding assistants around right now.  From Claude Code (Anthropic) and Codex (Microsoft) to Kiro (Amazon) and Goose (Block).  Other open source agent harnesses include OpenCode, Aider, and Pi. 
 
 However, these human-in-the-loop coding agents are typically mutually exclusive with more autonmous programmatic agent frameworks (e.g., smolagents, PydanticAI, CrewAI). 
 
@@ -46,7 +46,7 @@ This is the API problem. How can we programmatically compose agents into real wo
 
 ## What Is Ralph?
 
-Before I explain why a Python API matters, it's worth understanding the technique a little more.
+Before I explain why a programmatic API matters, it's worth understanding the technique a little more.
 
 The Ralph Wiggum technique is deceptively simple:
 
@@ -75,7 +75,7 @@ You're out of luck. No API means no customization.
 
 ## ralph.py
 
-I maintain a little "hobby project", [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent with a Python API. What if the entire Ralph technique was just a Python function you could import?
+I maintain a hobby project called [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent with a Python API. What if the entire Ralph technique was just a Python function you could import?
 
 The loop below leverages the Python API in PatchPal to implement a basic ralph loop.
 
