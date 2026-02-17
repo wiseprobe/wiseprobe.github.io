@@ -16,7 +16,7 @@ However, these human-in-the-loop coding agents are typically mutually exclusive 
 What if we outfitted a coding agent harness with a programmatic Python API? As it turns nout, having a programmatic API in an agent harness turns out to be incredibly useful.
 
 
-## 0x0: The API Problem
+## The API Problem
 
 Most coding agents today lack programmatic APIs. The proprietary ones (Claude Code, Codex) lock you into their UIs. The open-source ones (OpenCode, Aider, Goose) are open and extensible, but they're large, complex frameworks designed primarily for terminal interaction—not simple libraries you can import and compose.
 
@@ -44,7 +44,7 @@ Both approaches work for the basic loop. But both are fundamentally limited:
 
 This is the API problem. How can we programmatically compose agents into real workflows?
 
-## 0x1: What Is Ralph?
+## What Is Ralph?
 
 Before I explain why a Python API matters, it's worth understanding the technique a little more.
 
@@ -76,7 +76,7 @@ Claude Code implements this internally. Great—if you use Anthropic's models ex
 
 You're out of luck. No API means no customization.
 
-## 0x2: ralph.py
+## ralph.py
 
 I maintain a little "hobby project", [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent with a Python API. What if the entire Ralph technique was just a Python function you could import?
 
@@ -165,7 +165,7 @@ The bash script works for the basic case. The plugin is cleaner if you only use 
 A Python API (or any proper programmatic API) makes the agent a **primitive**. You can inspect its state, control its execution, compose multiple agents, integrate into existing tools, and add arbitrary logic. You're not fighting with shell parsing or reverse-engineering markdown files—you're writing normal code.
 
 
-## 0x4: So What?
+## So What?
 
 Having a Python API means the agent becomes a **composable primitive** instead of a monolithic application.
 
@@ -220,7 +220,7 @@ The common thread these examples is that they work because the agent is also a P
 
 Any of the above can be challenging when limited to an interacive terminal or desktop UI.
 
-## 0x5: Cost Control
+## Cost Control
 
 Running 30+ iterations with Claude Sonnet 4.5 can get expensive. With a Python API, you have options:
 
@@ -269,6 +269,6 @@ python ralph.py --prompt "Build a simple Flask hello world app with a test. Outp
 python -c "from patchpal.autopilot import autopilot_loop; autopilot_loop(prompt='...', completion_promise='COMPLETE')"
 ```
 
-All code and examples are here: [github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
+Code and examples are here: [github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
 
 ---
