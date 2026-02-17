@@ -40,7 +40,7 @@ social:
   email: hello@wiseprobe.io # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://x.com/wiseprobe # change to your Twitter homepage
+    - https://bsky.app/profile/wiseprobe.bsky.social # BlueSky profile
     - https://github.com/wiseprobe # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
