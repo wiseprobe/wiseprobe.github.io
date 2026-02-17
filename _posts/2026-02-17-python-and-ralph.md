@@ -84,6 +84,10 @@ The loop below leverages the Python API in PatchPal to implement a basic ralph l
 #!/usr/bin/env python3
 """ralph.py - Autonomous coding via iterative refinement"""
 
+# Disable permissions for completely autonomous operation
+import os
+os.environ["PATCHPAL_REQUIRE_PERMISSION"] = "false"
+
 from patchpal.agent import create_agent
 
 def ralph_loop(prompt: str, completion_promise: str, max_iterations: int = 50):
@@ -181,10 +185,10 @@ ralph_loop(
 # view results in the notebook
 ```
 
-<img src="/images/posts/python_and_ralph/ralph_in_jupyter.png" alt="Python and Coding Agents" width="600"/>
+<img src="/images/posts/python_and_ralph/ralph_in_jupyter.png" alt="Python and Coding Agents" width="800"/>
 
 
-<img src="/images/posts/python_and_ralph/ralph_in_jupyter2.png" alt="Python and Coding Agents" width="600"/>
+<img src="/images/posts/python_and_ralph/ralph_in_jupyter2.png" alt="Python and Coding Agents" width="800"/>
 
 **Example 2: Automated Code Review Fixes**
 ```python
@@ -256,7 +260,7 @@ if some_condition_is_met(initial_response, agent.cumulative_cost):
 ```
 
 
-These optimizations require programmatic access to cost tracking and model configuration. Impossible through a UI.
+These optimizations require programmatic access to cost tracking and model configuration. Usually impossible through a UI.
 
 ## Trying `ralph.py` Yourself
 
