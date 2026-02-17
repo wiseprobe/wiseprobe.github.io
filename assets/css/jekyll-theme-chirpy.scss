@@ -28,10 +28,10 @@
   --label-color: #374151 !important;                   /* Gray-700 - labels */
   
   /* Background Colors */
-  --body-bg: #fefce8 !important;                       /* Yellow-50 - warm, inviting background */
+  --body-bg: #f1f5f9 !important;                       /* Slate-100 - cool gray background */
   --main-bg: #ffffff !important;                       /* Pure white for content areas */
   --card-bg: #ffffff !important;
-  --sidebar-bg: #fef3c7 !important;                    /* Amber-100 - warm sidebar */
+  --sidebar-bg: #e2e8f0 !important;                    /* Slate-200 - cool gray sidebar */
   
   /* Border & Divider Colors */
   --border-color: #e5e7eb !important;                  /* Gray-200 - subtle borders */
@@ -88,8 +88,8 @@
   --site-subtitle-color: #6b7280 !important;           /* Gray-500 */
   
   /* Sidebar specific */
-  --sidebar-border-color: #f3c778 !important;          /* Amber-300 - warm border */
-  --sidebar-muted-color: #78716c !important;           /* Stone-500 */
+  --sidebar-border-color: #cbd5e1 !important;          /* Slate-300 - cool border */
+  --sidebar-muted-color: #64748b !important;           /* Slate-500 */
   --sidebar-active-color: #0891b2 !important;          /* Cyan-600 - active link */
 }
 
@@ -137,8 +137,9 @@ div[class^='language-'] .code-header {
 
 /* Inline code improvements */
 code.highlighter-rouge {
-  background-color: #fef2f2 !important;
-  color: var(--highlighter-rouge-color) !important;
+  background-color: #f1f5f9 !important;                /* Slate-100 - matches body bg */
+  color: #059669 !important;                           /* Emerald-600 - green text */
+  /* color: #dc2626 !important; */                     /* Red-600 - red text (alternative) */
   padding: 0.125rem 0.375rem;
   border-radius: 0.25rem;
   font-size: 0.875em;
@@ -273,7 +274,7 @@ table {
 
 /* Category and tag page cards */
 .card-header {
-  background-color: var(--sidebar-bg);
+  background-color: #f8fafc;
   border-bottom: 2px solid var(--link-color);
   font-weight: 600;
 }
