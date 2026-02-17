@@ -167,7 +167,7 @@ Having a Python API means the agent becomes a **composable primitive** instead o
 
 Things that might have been more challenging become much easier with a `ralph.py`:
 
-**Example: Jupyter Notebook Development**
+**Example 1: Jupyter Notebook Development**
 ```python
 # In a Jupyter cell
 from ralph import ralph_loop
@@ -178,7 +178,7 @@ ralph_loop(
     completion_promise="ANALYSIS_COMPLETE",
     max_iterations=10
 )
-# immediately view results in 
+# view results in the notebook
 ```
 
 <img src="/images/posts/python_and_ralph/ralph_in_jupyter.png" alt="Python and Coding Agents" width="600"/>
