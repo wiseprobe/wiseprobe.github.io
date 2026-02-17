@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "The Python API Problem"
+title: "The Unreasonable Effectiveness of a Python API to a Coding Agent"
 categories: [Technology, AI]
-tags: [ai agents, python, ralph wiggum, autopilot, api]
+tags: [ai agents, python, ralph wiggum, autopilot, api, patchpal]
 ---
 
 <img src="/images/posts/patchpal/ralph-wiggum.jpg" alt="Ralph Wiggum" width="400"/>
@@ -74,6 +74,8 @@ You're out of luck. No API means no customization.
 ## 0x2: ralph.py
 
 Now bear with me here. What if the entire Ralph technique was just a Python function you could import?
+
+I maintain PatchPal, an open-source coding agent with a Python API. Being model agnostic, it's a great testing ground—the model is just a parameter, so the real variable is how you orchestrate it. Implementing Ralph was straightforward:
 
 ```python
 #!/usr/bin/env python3
@@ -163,11 +165,11 @@ Since my primary concern was practical utility, I tested the three implementatio
 **Test Setup:**
 - Task: Build a Flask TODO API with CRUD endpoints, input validation, and pytest tests
 - Success: All tests pass
-- Implementations: Bash script (Huntley's original), Claude plugin (Anthropic's official), Python API (PatchPal)
+- Implementations: Bash script (Huntley's original), Claude plugin (Anthropic's official), Python API (PatchPal's ralph.py)
 
 **Scenario 1: Basic Ralph Loop**
 
-All three work. The bash script pipes prompts in a loop, the plugin uses stop hooks, the Python API calls `ralph_loop()`. Results are roughly equivalent—7-8 iterations, ~$1.15 in API costs with Claude Sonnet 4.5, complete TODO API with passing tests.
+All three work. The bash script pipes prompts in a loop, the plugin uses stop hooks, PatchPal's Python API calls `ralph_loop()`. Results are roughly equivalent—7-8 iterations, ~$1.15 in API costs with Claude Sonnet 4.5, complete TODO API with passing tests.
 
 **Scenario 2: Multi-Phase Development**
 
@@ -308,15 +310,15 @@ But look at what the action signals: **Don't build programmatic tools. Use our c
 
 This is backwards. OpenCode had 8,000+ GitHub stars because developers wanted programmatic access. They wanted to integrate Claude into their workflows, not adopt Claude Code's workflow. Blocking them doesn't make the demand disappear—it just means developers use OpenAI or vLLM instead.
 
-Here's why this matters: I just showed that `ralph.py` enables workflows literally impossible through a UI. Multi-phase development, CI/CD integration, cost optimization, custom orchestration—these aren't edge cases. They're how professional developers actually work.
+Here's why this matters: I just showed that PatchPal's `ralph.py` enables workflows literally impossible through a UI. Multi-phase development, CI/CD integration, cost optimization, custom orchestration—these aren't edge cases. They're how professional developers actually work.
 
-No vendor will build API-first experiences for competitors' models. Anthropic won't optimize for OpenAI. OpenAI won't optimize for Gemini. But an open-source Python agent with a clean API works with all of them, because contributors use different models and fix what they personally need.
+No vendor will build API-first experiences for competitors' models. Anthropic won't optimize for OpenAI. OpenAI won't optimize for Gemini. But an open-source Python agent like PatchPal works with all of them, because contributors use different models and fix what they personally need.
 
 **The model is the moat. The API is the bridge.** Burning bridges just means fewer people bother to cross.
 
 ## 0x6: The Implementation
 
-The full `ralph.py` is ~200 lines with argument parsing and logging. The core loop is genuinely ~20 lines:
+PatchPal's `ralph.py` is ~200 lines with argument parsing and logging. The core loop is genuinely ~20 lines:
 
 ```python
 def ralph_loop(prompt: str, completion_promise: str, max_iterations: int = 50, model: str = None):
@@ -459,7 +461,7 @@ python ralph.py --prompt "Build a simple Flask hello world app with a test" --co
 python -c "from patchpal.autopilot import autopilot_loop; autopilot_loop(prompt='...', completion_promise='COMPLETE')"
 ```
 
-Full implementation: [github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
+All code, benchmarks, and examples: [github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
 
 ---
 
