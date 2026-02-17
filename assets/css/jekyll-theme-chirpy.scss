@@ -1,83 +1,147 @@
 ---
 ---
 
-@import 'main
-  {%- if jekyll.environment == 'production' -%}
-    .bundle
-  {%- endif -%}
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
 ';
 
-/* Custom Color Scheme Overrides */
+/* ============================================
+   Append your custom style below
+   ============================================ */
+
 :root {
+  /* Base Hue and Saturation for creating style colors */
+  --base-hue: 190;        /* Teal/Cyan hue */
+  --base-saturation: 70%; /* Vibrant saturation */
+  
   /* Primary Brand Colors */
-  --link-color: #0891b2;                    /* Cyan-600 - professional teal */
-  --link-underline-color: #06b6d4;          /* Cyan-500 - lighter on hover */
+  --link-color: #0891b2 !important;                    /* Cyan-600 - professional teal */
+  --link-underline-color: #06b6d4 !important;          /* Cyan-500 - lighter on hover */
   
   /* Text Colors */
-  --text-color: #1f2937;                    /* Gray-800 - improved readability */
-  --text-muted-color: #6b7280;              /* Gray-500 - subtle secondary text */
-  --heading-color: #111827;                 /* Gray-900 - strong headings */
+  --text-color: #1f2937 !important;                    /* Gray-800 - improved readability */
+  --text-muted-color: #6b7280 !important;              /* Gray-500 - subtle secondary text */
+  --heading-color: #111827 !important;                 /* Gray-900 - strong headings */
+  --label-color: #374151 !important;                   /* Gray-700 - labels */
   
   /* Background Colors */
-  --body-bg: #fefce8;                       /* Yellow-50 - warm, inviting background */
-  --main-bg: #ffffff;                       /* Pure white for content areas */
-  --card-bg: #ffffff;
-  --sidebar-bg: #fef3c7;                    /* Amber-100 - warm sidebar */
+  --body-bg: #fefce8 !important;                       /* Yellow-50 - warm, inviting background */
+  --main-bg: #ffffff !important;                       /* Pure white for content areas */
+  --card-bg: #ffffff !important;
+  --sidebar-bg: #fef3c7 !important;                    /* Amber-100 - warm sidebar */
   
   /* Border & Divider Colors */
-  --border-color: #e5e7eb;                  /* Gray-200 - subtle borders */
-  --card-border-color: #d1d5db;             /* Gray-300 - defined card edges */
+  --border-color: #e5e7eb !important;                  /* Gray-200 - subtle borders */
+  --main-border-color: #d1d5db !important;             /* Gray-300 */
+  --card-border-color: #d1d5db !important;             /* Gray-300 - defined card edges */
   
   /* Button & Interactive Elements */
-  --btn-bg: #0891b2;                        /* Cyan-600 - primary action */
-  --btn-border-color: #0e7490;              /* Cyan-700 - button border */
-  --btn-text-color: #ffffff;
+  --btn-bg: #0891b2 !important;                        /* Cyan-600 - primary action */
+  --btn-border-color: #0e7490 !important;              /* Cyan-700 - button border */
+  --btn-text-color: #ffffff !important;
+  --button-bg: #ffffff !important;
+  --button-border-color: #e5e7eb !important;
   
   /* Code Blocks */
-  --code-bg: #f9fafb;                       /* Gray-50 - light code background */
-  --highlighter-rouge-color: #dc2626;       /* Red-600 - inline code */
+  --code-bg: #f9fafb !important;                       /* Gray-50 - light code background */
+  --highlighter-rouge-color: #dc2626 !important;       /* Red-600 - inline code */
+  --code-header-bg: #f3f4f6 !important;                /* Gray-100 */
+  
+  /* Blockquotes */
+  --blockquote-border-color: #0891b2 !important;       /* Cyan accent */
+  --blockquote-text-color: #4b5563 !important;         /* Gray-600 */
   
   /* Tag & Badge Colors */
-  --tag-bg: #e0f2fe;                        /* Sky-100 - soft tag background */
-  --tag-hover-bg: #bae6fd;                  /* Sky-200 - tag hover */
+  --tag-bg: #e0f2fe !important;                        /* Sky-100 - soft tag background */
+  --tag-hover-bg: #bae6fd !important;                  /* Sky-200 - tag hover */
+  --tag-border: #38bdf8 !important;                    /* Sky-400 */
   
   /* Search & Input */
-  --search-icon-color: #0891b2;             /* Match primary color */
-  --input-focus-border-color: #06b6d4;      /* Cyan on focus */
+  --search-icon-color: #0891b2 !important;             /* Match primary color */
+  --input-focus-border-color: #06b6d4 !important;      /* Cyan on focus */
   
   /* Table */
-  --table-header-bg: #f3f4f6;               /* Gray-100 */
-  --table-row-hover-bg: #f9fafb;            /* Gray-50 */
+  --table-header-bg: #f3f4f6 !important;               /* Gray-100 */
+  --table-row-hover-bg: #f9fafb !important;            /* Gray-50 */
+  --tb-odd-bg: #f9fafb !important;                     /* Gray-50 - odd rows */
+  --tb-border-color: #e5e7eb !important;               /* Gray-200 */
   
   /* Scrollbar */
-  --scrollbar-thumb-bg: #9ca3af;            /* Gray-400 */
-  --scrollbar-track-bg: #f3f4f6;            /* Gray-100 */
+  --scrollbar-thumb-bg: #9ca3af !important;            /* Gray-400 */
+  --scrollbar-track-bg: #f3f4f6 !important;            /* Gray-100 */
   
   /* Selection */
-  --selection-bg: #bae6fd;                  /* Sky-200 - highlighted text */
-  --selection-color: #0c4a6e;               /* Sky-900 - selected text color */
+  --selection-bg: #bae6fd !important;                  /* Sky-200 - highlighted text */
+  --selection-color: #0c4a6e !important;               /* Sky-900 - selected text color */
+  
+  /* TOC (Table of Contents) */
+  --toc-highlight: #0891b2 !important;                 /* Cyan highlight */
+  
+  /* Post metadata */
+  --post-list-text-color: #4b5563 !important;          /* Gray-600 */
+  
+  /* Site title and branding */
+  --site-title-color: #111827 !important;              /* Gray-900 */
+  --site-subtitle-color: #6b7280 !important;           /* Gray-500 */
+  
+  /* Sidebar specific */
+  --sidebar-border-color: #f3c778 !important;          /* Amber-300 - warm border */
+  --sidebar-muted-color: #78716c !important;           /* Stone-500 */
+  --sidebar-active-color: #0891b2 !important;          /* Cyan-600 - active link */
 }
 
-/* Enhanced link hover effects */
+/* ============================================
+   Enhanced Styling
+   ============================================ */
+
+/* Enhanced link hover effects with smooth transitions */
+a {
+  transition: color 0.2s ease-in-out;
+}
+
 a:hover {
   color: var(--link-underline-color);
-  transition: color 0.2s ease-in-out;
 }
 
 /* Improved card shadows for depth */
 .card {
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  transition: box-shadow 0.2s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+  border-radius: 0.5rem;
 }
 
 .card:hover {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  transform: translateY(-2px);
 }
 
 /* Better code block styling */
 .highlight {
-  border-radius: 0.375rem;
+  border-radius: 0.5rem;
   border: 1px solid var(--border-color);
+}
+
+div[class^='language-'] {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Code header improvements */
+div[class^='language-'] .code-header {
+  background-color: var(--code-header-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Inline code improvements */
+code.highlighter-rouge {
+  background-color: #fef2f2 !important;
+  color: var(--highlighter-rouge-color) !important;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
 }
 
 /* Improved tag styling */
@@ -86,7 +150,14 @@ a:hover {
   padding: 0.25rem 0.75rem;
   font-size: 0.875rem;
   font-weight: 500;
-  transition: background-color 0.2s ease-in-out;
+  background-color: var(--tag-bg);
+  border: 1px solid var(--tag-border);
+  transition: all 0.2s ease-in-out;
+}
+
+.tag:hover {
+  background-color: var(--tag-hover-bg);
+  transform: scale(1.05);
 }
 
 /* Enhanced post preview cards */
@@ -95,9 +166,14 @@ a:hover {
   overflow: hidden;
 }
 
+#post-list .card {
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
 /* Sidebar improvements */
 #sidebar {
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
 }
 
 /* Better button styling */
@@ -105,11 +181,23 @@ a:hover {
   border-radius: 0.375rem;
   font-weight: 500;
   transition: all 0.2s ease-in-out;
+  padding: 0.5rem 1rem;
 }
 
 .btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+/* Back to top button enhancement */
+#back-to-top {
+  border-radius: 50%;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+#back-to-top:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
 /* Smooth scrolling */
@@ -126,4 +214,71 @@ html {
 ::-moz-selection {
   background-color: var(--selection-bg);
   color: var(--selection-color);
+}
+
+/* Blockquote enhancement */
+blockquote {
+  border-left: 4px solid var(--blockquote-border-color);
+  padding-left: 1rem;
+  color: var(--blockquote-text-color);
+  font-style: italic;
+}
+
+/* Table improvements */
+table {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Search results enhancement */
+#search-result-wrapper .content {
+  background-color: var(--main-bg);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease-in-out;
+}
+
+#search-result-wrapper .content:hover {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  transform: translateX(4px);
+}
+
+/* TOC (Table of Contents) active link */
+#toc a.active {
+  color: var(--toc-highlight) !important;
+  font-weight: 600;
+}
+
+/* Post metadata improvements */
+.post-meta {
+  color: var(--text-muted-color);
+  font-size: 0.875rem;
+}
+
+.post-meta i {
+  color: var(--link-color);
+}
+
+/* Archive page improvements */
+#archives .year {
+  color: var(--heading-color);
+  font-weight: 700;
+}
+
+#archives .date {
+  color: var(--text-muted-color);
+}
+
+/* Category and tag page cards */
+.card-header {
+  background-color: var(--sidebar-bg);
+  border-bottom: 2px solid var(--link-color);
+  font-weight: 600;
+}
+
+/* Topbar enhancement */
+#topbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
