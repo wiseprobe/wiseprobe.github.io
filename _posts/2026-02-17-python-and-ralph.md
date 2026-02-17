@@ -13,7 +13,7 @@ There are dozens of different agentic coding assistants around right now.  From 
 
 However, these human-in-the-loop coding agents are typically mutually exclusive with more autonmous programmatic agent frameworks (e.g., smolagents, PydanticAI, CrewAI). 
 
-What if we outfitted a coding agent harness with a programmatic Python API? As it turns nout, having a programmatic API in an agent harness turns out to be incredibly useful.
+What if we outfitted a coding agent harness with a programmatic Python API? As it turns out, having a programmatic API in an agent harness is incredibly useful.
 
 
 ## The API Problem
@@ -64,13 +64,10 @@ The agent never actually "completes"—every time it tries to return, you check 
 
 It's surprisingly effective. Tasks that fail on first attempt often succeed after 5-10 iterations as the agent debugs its own output.
 
-But here's the catch: **this only works if you can intercept the agent's output and programmatically feed prompts back**. You need an API.
-
 Claude Code implements this internally. Great—if you use Anthropic's models exclusively and don't need to modify the behavior. What if you want to:
 
 - Use a cheaper model or a local model to reduce API costs?
 - Run multiple sequential phases with different completion criteria?
-- Integrate Ralph into CI/CD to auto-fix failing tests?
 - Add custom logic between iterations?
 - Track costs and context usage programmatically?
 
@@ -154,7 +151,6 @@ Let's compare the three approaches:
 | **Budget limits** | ❌ Shell math | ❌ Not supported | ✅ `if cost > limit: stop` |
 | **Multi-phase workflows** | ⚠️ Multiple scripts | ❌ Manual | ✅ Sequential function calls |
 | **Import into Python** | ❌ Subprocess | ❌ No | ✅ `from ralph import ralph_loop` |
-| **CI/CD integration** | ⚠️ Shell script | ❌ No | ✅ Native Python |
 | **Jupyter notebooks** | ❌ No | ❌ No | ✅ Import and run |
 | **Error handling** | ⚠️ Exit codes | ❌ Opaque | ✅ Try/catch, inspect state |
 | **Debugging** | ⚠️ Parse stdout | ❌ Markdown files | ✅ Python debugger |
@@ -202,12 +198,12 @@ for comment in review_comments:
 **Example 3: Cost-Optimized Development**
 ```python
 # Use expensive model for first attempt, cheap model for iterations
-agent = create_agent(model="anthropic/claude-sonnet-4-5")
+agent = create_agent(model="anthropic/claude-opus-4-5")
 response = agent.run(prompt)
 
-if some_condition_is_met(response): # e.g., cost threshold
+if some_condition_is_met: # e.g., cost threshold
     # Switch to local model for refinement iterations
-    agent = create_agent(model="hosted_vllm/openai/gpt-oss-20b")
+    agent = create_agent(model="anthropic/claude-haiku-4-5")
     ralph_loop(prompt, completion_promise, max_iterations=20)
 ```
 
@@ -222,22 +218,10 @@ Any of the above can be challenging when limited to an interacive terminal or de
 
 ## Cost Control
 
-Running 30+ iterations with Claude Sonnet 4.5 can get expensive. With a Python API, you have options:
+Running 30+ iterations with Claude Sonnet 4.5 can get expensive. It's worth discussin costs a little further. With a Python API, you have options:
 
 
-**Option 1: Switch to cheaper model whenever you want**
-```python
-# Use more expensive Claude Opus 4.5 at first
-agent = create_agent(model="anthropic/claude-opus-4-5")
-initial_response = agent.run(prompt)
-
-if some_condition_is_met(initial_response):
-    # Switch to cheaper model
-    agent = create_agent(model="anthropic/claude-haiku=4-5")
-    ralph_loop(agent, prompt, completion_promise)
-```
-
-**Option 2: Budget Limits**
+**Option 1: Budget Limits**
 ```python
 def ralph_loop_with_budget(prompt, completion_promise, max_cost=5.0):
     agent = create_agent()
@@ -252,6 +236,20 @@ def ralph_loop_with_budget(prompt, completion_promise, max_cost=5.0):
             return response
 ```
 
+
+**Option 2: Switch to cheaper model whenever you want**
+```python
+# Use more expensive Claude Opus 4.5 at first
+agent = create_agent(model="anthropic/claude-opus-4-5")
+initial_response = agent.run(prompt)
+
+if some_condition_is_met(initial_response, agent.cumulative_cost):
+    # Switch to cheaper model
+    agent = create_agent(model="anthropic/claude-haiku-4-5")
+    ralph_loop(agent, prompt, completion_promise)
+```
+
+
 These optimizations require programmatic access to cost tracking and model configuration. Impossible through a UI.
 
 ## Trying `ralph.py` Yourself
@@ -259,13 +257,16 @@ These optimizations require programmatic access to cost tracking and model confi
 ```bash
 pip install patchpal
 
-# Download ralph.py
+# Download ralph.py example
 curl -O https://raw.githubusercontent.com/amaiya/patchpal/main/examples/ralph/ralph.py
 
 # Try it
 python ralph.py --prompt "Build a simple Flask hello world app with a test. Output <promise>COMPLETE</promise> when finished" --completion-promise "COMPLETE" --max-iterations 10
 
-# Or use as a library
+# Or use the integrated autopilot command
+patchpal-autopilot --prompt "Build a simple Flask hello world app with a test. Output <promise>COMPLETE</promise> when finished" --completion-promise "COMPLETE" --max-iterations 10
+
+# Or use as a library - ralph has been integrated into PatchPal's autopilot module
 python -c "from patchpal.autopilot import autopilot_loop; autopilot_loop(prompt='...', completion_promise='COMPLETE')"
 ```
 
