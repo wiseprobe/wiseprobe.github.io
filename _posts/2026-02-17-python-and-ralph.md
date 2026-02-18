@@ -22,7 +22,9 @@ Until recently, most coding agents lacked programmatic APIs. Proprietary ones li
 
 Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. Such programmatic APIs are a step forward in the ecosystem.
 
-However, the broader point remains: when coding agent harnesses aren't designed as composable libraries, entire categories of workflows become impossible or difficult. Having multiple options—including open-source alternatives like PatchPal that work with any LiteLLM-supported model—gives developers more flexibility in choosing tools that match their needs, whether that's model portability, licensing requirements, or specific design philosophies.
+More recently, I created a hobby project called [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent harness that implements both a terminal UI and a Python API.
+
+As I'll illustrate below, when coding agents aren't designed as composable libraries, entire categories of workflows become impossible or difficult.
 
 The Ralph Wiggum technique—where an agent iterates autonomously until completion—demonstrates this perfectly. Geoffrey Huntley [pioneered the approach](https://ghuntley.com/ralph/) in July 2025 with a 5-line bash script hack:
 
@@ -75,11 +77,9 @@ You're out of luck. No API means no customization.
 
 ## ralph.py: A Model-Agnostic Implementation
 
-I maintain a hobby project called [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent with a Python API that works with any LiteLLM-supported provider (OpenAI, Anthropic, local models via Ollama, etc.).
-
 What if the entire Ralph technique was just a Python function you could import and use with any model?
 
-The loop below leverages the Python API in PatchPal to implement a basic ralph loop.
+The loop below leverages the [Python API in PatchPal](https://amaiya.github.io/patchpal/usage/python-api/) to implement a basic ralph loop.
 
 
 ```python
