@@ -11,7 +11,7 @@ tags: [ai agents, python, ralph wiggum, autopilot, api, patchpal]
 
 There are dozens of different agentic coding assistants around right now.  From Claude Code (Anthropic) and Codex (Microsoft) to Kiro (Amazon) and Goose (Block).  Other open source agent harnesses include OpenCode, Aider, and Pi. 
 
-Until recently, these human-in-the-loop coding agents were typically mutually exclusive with more autonomous programmatic agent frameworks (e.g., smolagents, PydanticAI, CrewAI).
+These human-in-the-loop coding agents are typically mutually exclusive with more autonomous programmatic agent frameworks (e.g., smolagents, PydanticAI, CrewAI).
 
 As I'll explain below, having a programmatic API to a coding agent harness is incredibly useful.
 
