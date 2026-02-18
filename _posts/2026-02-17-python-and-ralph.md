@@ -22,7 +22,7 @@ Until recently, most coding agents lacked programmatic APIs. Proprietary ones li
 
 Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. Such programmatic APIs are a step forward in the ecosystem.
 
-More recently, I created a hobby project called [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent harness that implements both a terminal UI and a Python API.  As I'll illustrate below, when coding agents aren't designed as composable libraries, entire categories of workflows become difficult or impossible.
+More recently, I started a hobby project called [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent harness that implements both a terminal UI and a Python API.  As I'll illustrate below, when coding agents aren't designed as composable libraries, entire categories of workflows become difficult or impossible.
 
 The Ralph Wiggum technique—where an agent iterates autonomously until completion—demonstrates this perfectly. Geoffrey Huntley [pioneered the approach](https://ghuntley.com/ralph/) in July 2025 with a 5-line bash script hack:
 
