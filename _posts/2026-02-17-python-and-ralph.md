@@ -7,7 +7,7 @@ tags: [ai agents, python, ralph wiggum, autopilot, api, patchpal]
 
 <img src="/images/posts/python_and_ralph/python_and_coding_agent.png" alt="Python and Coding Agents" width="400"/>
 
-> "That's unpossible!" - Ralph Wiggum
+> "Simplicity is prerequisite for reliability." - Edsger Dijkstra
 
 There are dozens of different agentic coding assistants around right now.  From Claude Code (Anthropic) and Codex (Microsoft) to Kiro (Amazon) and Goose (Block).  Other open source agent harnesses include OpenCode, Aider, and Pi. 
 
@@ -219,7 +219,7 @@ ralph_loop(
 
 
 
-The common thread these examples is that they work because the agent is also a Python library you can import and compose:
+The common thread in these examples is that they work because the agent is also a Python library you can import and compose:
 
 1. **Cost tracking** - `agent.cumulative_cost` tracks spending in real-time
 2. **Model switching** - Can swap models mid-session
