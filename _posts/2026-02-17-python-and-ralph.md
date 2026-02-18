@@ -232,7 +232,56 @@ Any of the above can be challenging when limited to an interacive terminal or de
 ## Beyond Ralph Loops
 
 
-The examples above were simply invoking `ralph_loop` and doing things before and after.  Armed with a Python API, you can, of course, also modify `ralph_loop` itself for fine-grained customization or perhaps not use a loop at all.
+The examples above were simply invoking `ralph_loop` and doing things before and after. Armed with a Python API, you can, of course, also modify `ralph_loop` itself for fine-grained customization or perhaps not use a loop at all.
+
+The Python API supports a full spectrum of autonomy levels:
+- **Autonomous loops** (Ralph): Agent iterates until completion
+- **Controlled agent execution**: Non-looping `agent.run()` calls for less autonomous, more predictable, step-by-step workflows
+- **Direct tool invocation**: Call tools as regular Python functions with no agent/LLM involved
+
+### Controlled Agent Execution and Direct Tool Invocation
+
+For **less autonomous workflows**, you can orchestrate the agent with sequential `agent.run()` calls instead of letting it loop:
+
+```python
+from patchpal.agent import create_agent
+
+agent = create_agent()
+
+# Step 1: Analyze codebase
+agent.run("Use get_repo_map to analyze the project structure")
+
+# Step 2: Read specific file based on previous analysis
+agent.run("Read the authentication module at src/auth.py")
+
+# Step 3: Make targeted changes
+agent.run("Add rate limiting to the login endpoint")
+
+# Step 4: Run tests
+agent.run("Execute pytest and show results")
+```
+
+You can also bypass the agent entirely and call tools directly as regular Python functions—**no LLM involved, no agent overhead**. For example, building a CI pipeline that uses the agent for complex analysis but handles simple operations directly:
+
+```python
+from patchpal.agent import create_agent
+from patchpal.tools import grep, read_file, git_diff
+
+# Direct tool calls for deterministic operations
+changed_files = git_diff(staged=True)
+todos = grep(pattern="TODO:", file_glob="*.py")
+
+if todos:
+    # Use agent when reasoning is needed
+    agent = create_agent()
+    agent.run(f"Review these TODOs and determine which are blockers: {todos}")
+else:
+    print("✅ No TODOs found")
+```
+
+All file operations, git tools, code analysis, and other built-in tools are available as importable functions. See the [Built-In Tools documentation](https://amaiya.github.io/patchpal/features/tools/) for the complete list.
+
+### Cost Optimization
 
 Running 30+ iterations with Claude Opus 4.5 or Claude Sonnet 4.5 can get expensive. Let's look at cost optimization a little further.
 
