@@ -11,7 +11,7 @@ tags: [ai agents, python, ralph wiggum, autopilot, api, patchpal]
 
 There are dozens of different agentic coding assistants around right now.  From Claude Code (Anthropic) and Codex (Microsoft) to Kiro (Amazon) and Goose (Block).  Other open source agent harnesses include OpenCode, Aider, and Pi. 
 
-Until recently, these human-in-the-loop coding agents were typically mutually exclusive with more autonomous programmatic agent frameworks (e.g., smolagents, PydanticAI, CrewAI). Anthropic's Claude Agent SDK (released September 2025) has bridged this gap for Claude-based agents, demonstrating the value of programmable agent harnesses.
+Until recently, these human-in-the-loop coding agents were typically mutually exclusive with more autonomous programmatic agent frameworks (e.g., smolagents, PydanticAI, CrewAI).
 
 As I'll explain below, having a programmatic API to a coding agent harness is incredibly useful.
 
@@ -20,9 +20,9 @@ As I'll explain below, having a programmatic API to a coding agent harness is in
 
 Until recently, most coding agents lacked programmatic APIs. Proprietary ones like Codex (Microsoft) and Kiro (Amazon) locked you into their UIs. The open-source ones (OpenCode, Aider, Goose) are open and extensible, but they're large, complex frameworks designed primarily for terminal interaction—not simple libraries you can import and compose.
 
-**Update**: Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. This is a significant step forward for the ecosystem.
+Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. Such programmatic APIs are a step forward in the ecosystem.
 
-However, the broader point remains: when coding agents aren't designed as composable libraries, entire categories of workflows become impossible or difficult. Having multiple options—including open-source alternatives like PatchPal that work with any LiteLLM-supported model—gives developers more flexibility in choosing tools that match their needs, whether that's model portability, licensing requirements, or specific design philosophies.
+However, the broader point remains: when coding agent harnesses aren't designed as composable libraries, entire categories of workflows become impossible or difficult. Having multiple options—including open-source alternatives like PatchPal that work with any LiteLLM-supported model—gives developers more flexibility in choosing tools that match their needs, whether that's model portability, licensing requirements, or specific design philosophies.
 
 The Ralph Wiggum technique—where an agent iterates autonomously until completion—demonstrates this perfectly. Geoffrey Huntley [pioneered the approach](https://ghuntley.com/ralph/) in July 2025 with a 5-line bash script hack:
 
