@@ -9,7 +9,7 @@ tags: [ai agents, python, ralph wiggum, autopilot, api, patchpal]
 
 > "Simplicity is prerequisite for reliability." - Edsger Dijkstra
 
-There are dozens of different agentic coding assistants around right now.  From Claude Code (Anthropic) and Codex (Microsoft) to Kiro (Amazon) and Goose (Block).  Other open source agent harnesses include OpenCode, Aider, and Pi. 
+There are dozens of different agentic coding assistants around right now, from Claude Code (Anthropic) and Codex (Microsoft) to Kiro (Amazon) and Goose (Block). Other open source coding agents include OpenCode, Aider, and Pi.
 
 These human-in-the-loop coding agents are typically mutually exclusive with more autonomous programmatic agent frameworks (e.g., smolagents, PydanticAI, CrewAI).
 
