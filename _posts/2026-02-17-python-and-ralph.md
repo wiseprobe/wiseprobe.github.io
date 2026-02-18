@@ -261,7 +261,7 @@ agent.run("Add rate limiting to the login endpoint")
 agent.run("Execute pytest and show results")
 ```
 
-You can also bypass the agent entirely and call tools directly as regular Python functions—**no LLM involved, no agent overhead**. For example, building a CI pipeline that uses the agent for complex analysis but handles simple operations directly:
+You can also bypass the agent entirely and call tools directly as regular Python functions—**no LLM involved, no agent overhead**. For example, building a CI pipeline that uses the agent for complex analysis but handles simple operations directly using the agent harness:
 
 ```python
 from patchpal.agent import create_agent
