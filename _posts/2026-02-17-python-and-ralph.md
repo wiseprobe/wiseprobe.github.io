@@ -2,7 +2,7 @@
 layout: post
 title: "AI Coding Agents Should Be Programmable"
 categories: [Technology, AI]
-tags: [ai agents, python, ralph wiggum, autopilot, api, patchpal]
+tags: [ai agents, agent harness, python, ralph wiggum, patchpal]
 ---
 
 <img src="/images/posts/python_and_ralph/python_and_coding_agent.png" alt="Python and Coding Agents" width="400"/>
