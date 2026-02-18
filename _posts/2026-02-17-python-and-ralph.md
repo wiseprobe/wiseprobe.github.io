@@ -24,7 +24,7 @@ Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/
 
 More recently, I created a hobby project called [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent harness that implements both a terminal UI and a Python API.
 
-As I'll illustrate below, when coding agents aren't designed as composable libraries, entire categories of workflows become impossible or difficult.
+As I'll illustrate below, when coding agents aren't designed as composable libraries, entire categories of workflows become difficult or impossible.
 
 The Ralph Wiggum technique—where an agent iterates autonomously until completion—demonstrates this perfectly. Geoffrey Huntley [pioneered the approach](https://ghuntley.com/ralph/) in July 2025 with a 5-line bash script hack:
 
