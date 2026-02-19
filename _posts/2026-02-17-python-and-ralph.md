@@ -18,7 +18,7 @@ As it turns out, having a programmatic API to a coding agent harness is incredib
 
 ## The API Problem (and Recent Solutions)
 
-Until recently, most coding agents lacked programmatic APIs. Proprietary ones like Codex (OpenAI) and Kiro (Amazon) locked you into their UIs. The open-source ones (OpenCode, Aider, Goose) are open and extensible, but they're large, complex frameworks designed primarily for terminal interaction—not simple libraries you can import and compose.
+Until recently, most coding agents lacked programmatic APIs. Proprietary ones locked you into their UIs. The open-source ones (OpenCode, Aider, Goose) are open and extensible, but they're large, complex frameworks designed primarily for terminal interaction—not simple libraries you can import and compose.
 
 Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. Codex now also [has an SDK](https://developers.openai.com/codex/sdk/). Such programmatic APIs are a step forward in the ecosystem.
 
