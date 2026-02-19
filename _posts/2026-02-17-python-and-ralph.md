@@ -339,6 +339,6 @@ python -c "from patchpal.autopilot import autopilot_loop; autopilot_loop(prompt=
 
 **Security Note:** `ralph.py` disables permission checks for fully autonomous operation. Running in containers or sandboxed environments is strongly recommended—never on production systems or with access to sensitive data. To run with permission checks, you can remove `os.environ["PATCHPAL_REQUIRE_PERMISSION"] = "false"` from `ralph.py`.
 
-**More Information:** Code, docs, and examples are available here: [github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
+**More Information:** Code, docs, and examples are available at: [github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
 
 ---
