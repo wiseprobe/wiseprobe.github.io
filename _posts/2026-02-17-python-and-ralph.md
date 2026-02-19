@@ -318,6 +318,7 @@ if some_condition_is_met(initial_response, agent.cumulative_cost):
 
 These optimizations require programmatic access to cost tracking and model configuration. Usually impossible through a UI.
 
+
 ## Trying `ralph.py` Yourself
 
 ```bash
@@ -336,6 +337,8 @@ patchpal-autopilot --prompt "Build a simple Flask hello world app with a test. O
 python -c "from patchpal.autopilot import autopilot_loop; autopilot_loop(prompt='...', completion_promise='COMPLETE')"
 ```
 
-Code, docs, and examples are available here: [github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
+**Security Note:** `ralph.py` disables permission checks for fully autonomous operation. Running in containers or sandboxed environments is strongly recommended—never on production systems or with access to sensitive data. To run with permission checks, you can remove `os.environ["PATCHPAL_REQUIRE_PERMISSION"] = "false"` from `ralph.py`.
+
+**More Information:** Code, docs, and examples are available here: [github.com/amaiya/patchpal](https://github.com/amaiya/patchpal)
 
 ---
