@@ -20,9 +20,9 @@ As it turns out, having a programmatic API to a coding agent harness is incredib
 
 Until recently, most coding agents lacked programmatic APIs. Proprietary ones locked you into their UIs. The open-source ones (OpenCode, Aider, Goose) are open and extensible, but they're large, complex frameworks designed primarily for terminal interaction—not simple libraries you can import and compose.
 
-Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. Codex now also [has an SDK](https://developers.openai.com/codex/sdk/). Such programmatic APIs are a step forward in the ecosystem.
+Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. Codex now also [has an SDK](https://developers.openai.com/codex/sdk/). Pi also includes [a powerful SDK](https://github.com/badlogic/pi-mono/blob/HEAD/packages/coding-agent/docs/sdk.md).
 
-More recently, I started a hobby project called [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent harness that implements both a terminal UI and a Python API.  As I'll illustrate below, when coding agents aren't designed as composable libraries, entire categories of workflows become difficult or impossible.
+More recently, I started a hobby project called [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent harness that implements both a terminal UI and a Python API. As I'll illustrate below, when coding agents aren't designed as composable libraries, entire categories of workflows become difficult or impossible.
 
 The Ralph Wiggum technique—where an agent iterates autonomously until completion—demonstrates this perfectly. Geoffrey Huntley [pioneered the approach](https://ghuntley.com/ralph/) in July 2025 with a 5-line bash script hack:
 
