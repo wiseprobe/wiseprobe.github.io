@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The Unreasonable Effectiveness of Coding Agent SDKs"
+title: "Things You Can Do With a Coding Agent SDK"
 categories: [Technology, AI]
 tags: [ai agents, agent harness, python, ralph wiggum, patchpal]
 ---
