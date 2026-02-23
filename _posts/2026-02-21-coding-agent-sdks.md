@@ -90,12 +90,14 @@ os.environ["PATCHPAL_REQUIRE_PERMISSION"] = "false"
 
 from patchpal.agent import create_agent
 
-def ralph_loop(prompt: str, completion_promise: str, max_iterations: int = 50):
+def ralph_loop(prompt: str, completion_promise: str, max_iterations: int = 50, model: str = None):
     """
     The stop hook pattern: agent never actually completes until it outputs
     the completion promise. Each iteration, agent sees previous work in history.
     """
-    agent = create_agent()
+    agent = create_agent(
+        model_id=model or os.getenv("PATCHPAL_MODEL", "anthropic/claude-sonnet-4-5")
+    )
     
     for iteration in range(max_iterations):
         print(f"🔄 Ralph Iteration {iteration + 1}/{max_iterations}")
@@ -133,11 +135,8 @@ ralph_loop(prompt=f"Fix failing tests: {test_output}", completion_promise="FIXED
 # In a Jupyter notebook  
 ralph_loop(prompt="Analyze data.csv and create plots and output <promise>DONE</promise> when done.", completion_promise="DONE")
 
-# With custom logic
-agent = create_agent()
-response = ralph_loop(prompt, completion_promise)
-if agent.cumulative_cost > 10.0:
-    alert_team("Ralph exceeded budget")
+# With custom model
+ralph_loop(prompt, completion_promise, model="ollama_chat/gpt-oss-20b")
 ```
 
 This is what a programmatic API enables. Not "can you make it loop"—bash does that. Not "can you integrate with one tool"—plugins do that. But "can you compose the agent into arbitrary workflows using actual code?"
@@ -187,14 +186,24 @@ for comment in review_comments:
 
 **Example 2: Cost-Optimized Development**
 ```python
-# Use expensive model for first attempt, cheap model for iterations
-agent = create_agent(model="anthropic/claude-opus-4-5")
-response = agent.run(prompt)
+# Use expensive model for first attempt, then switch to cheaper model
+from ralph import ralph_loop
 
-if some_condition_is_met: # e.g., cost threshold
-    # Switch to cheaper model for refinement iterations
-    agent = create_agent(model="anthropic/claude-haiku-4-5")
-    ralph_loop(prompt, completion_promise, max_iterations=20)
+# First attempt with powerful model
+ralph_loop(
+    prompt="Build a REST API with tests. Output: <promise>COMPLETE</promise> when done.",
+    completion_promise="COMPLETE",
+    model="anthropic/claude-opus-4-5",
+    max_iterations=1
+)
+
+# Switch to cheaper model for refinement iterations
+ralph_loop(
+    prompt="Continue the work. Fix any failing tests. Output: <promise>COMPLETE</promise> when done.",
+    completion_promise="COMPLETE",
+    model="anthropic/claude-haiku-4-5",
+    max_iterations=20
+)
 ```
 
 
@@ -321,10 +330,9 @@ initial_response = agent.run(prompt)
 if some_condition_is_met(initial_response, agent.cumulative_cost):
     # Switch to local model (free!)
     agent = create_agent(model="ollama_chat/gpt-oss:20b")
-    ralph_loop(agent, prompt, completion_promise)
 ```
 
-These optimizations require programmatic access to cost tracking and model configuration. Usually impossible through a UI.
+These optimizations require programmatic access to cost tracking and model configuration.
 
 
 ## Trying `ralph.py` Yourself
