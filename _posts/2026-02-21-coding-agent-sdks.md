@@ -13,7 +13,7 @@ There are dozens of different agentic coding assistants around right now, from C
 
 Human-in-the-loop coding agents are typically mutually exclusive with more autonomous programmatic agent frameworks (e.g., smolagents, PydanticAI, CrewAI).
 
-As it turns out, having a programmatic API to a coding agent harness is incredibly useful.
+Most use coding agents through a terminal, web, or desktop UI, but having a programmatic API to a coding agent harness is incredibly useful.
 
 
 ## The API Problem (and Recent Solutions)
