@@ -330,6 +330,7 @@ initial_response = agent.run(prompt)
 if some_condition_is_met(initial_response, agent.cumulative_cost):
     # Switch to local model (free!)
     agent = create_agent(model="ollama_chat/gpt-oss:20b")
+	response = agent.run(prompt)
 ```
 
 These optimizations require programmatic access to cost tracking and model configuration.
