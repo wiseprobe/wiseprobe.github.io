@@ -265,18 +265,26 @@ You can also bypass the agent entirely and call tools directly as regular Python
 
 ```python
 from patchpal.agent import create_agent
-from patchpal.tools import grep, read_file, git_diff
+from patchpal.tools import run_shell, read_file
 
 # Direct tool calls for deterministic operations
-changed_files = git_diff(staged=True)
-todos = grep(pattern="TODO:", file_glob="*.py")
+changed_files = run_shell("git diff --staged --name-only")
 
-if todos:
-    # Use agent when reasoning is needed
-    agent = create_agent()
-    agent.run(f"Review these TODOs and determine which are blockers: {todos}")
+if changed_files:
+    for file in changed_files.strip().split('\n'):
+        if file:
+            content = read_file(file)
+            
+            # Check for hardcoded API keys
+            if "API_KEY" in content and "sk-" in content:
+                print(f"⚠️ Hardcoded API key detected in {file}")
+            
+            # Check for TODOs in changed files
+            if "TODO:" in content:
+                agent = create_agent()
+                agent.run(f"Review TODOs in {file} and determine which are blockers")
 else:
-    print("✅ No TODOs found")
+    print("✅ No changes staged")
 ```
 
 All file operations, git tools, code analysis, and other built-in tools are available as importable functions. See the [Built-In Tools documentation](https://amaiya.github.io/patchpal/features/tools/) for the complete list.
