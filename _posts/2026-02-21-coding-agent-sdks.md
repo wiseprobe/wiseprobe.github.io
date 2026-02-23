@@ -304,7 +304,7 @@ def ralph_loop_with_budget(prompt, completion_promise, max_cost=5.0):
 ```
 
 
-**Option 2: Switch to local (or cheaper) model whenever you want**
+**Option 2: Switch to local model whenever you want**
 ```python
 # Use more expensive Claude Opus 4.5 at first
 agent = create_agent(model="anthropic/claude-opus-4-5")
