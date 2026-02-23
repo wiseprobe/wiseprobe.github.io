@@ -136,7 +136,7 @@ ralph_loop(prompt=f"Fix failing tests: {test_output}", completion_promise="FIXED
 ralph_loop(prompt="Analyze data.csv and create plots and output <promise>DONE</promise> when done.", completion_promise="DONE")
 
 # With custom model
-ralph_loop(prompt, completion_promise, model="ollama_chat/gpt-oss-20b")
+ralph_loop(prompt, completion_promise, model="ollama_chat/gpt-oss:20b")
 ```
 
 This is what a programmatic API enables. Not "can you make it loop"—bash does that. Not "can you integrate with one tool"—plugins do that. But "can you compose the agent into arbitrary workflows using actual code?"
