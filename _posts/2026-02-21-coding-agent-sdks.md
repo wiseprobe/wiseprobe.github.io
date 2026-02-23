@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "AI Coding Agents Should Be Programmable"
+title: "The Unreasonable Effectiveness of Coding Agent SDKs"
 categories: [Technology, AI]
 tags: [ai agents, agent harness, python, ralph wiggum, patchpal]
 ---
@@ -9,9 +9,9 @@ tags: [ai agents, agent harness, python, ralph wiggum, patchpal]
 
 > "Simplicity is prerequisite for reliability." - Edsger Dijkstra
 
-There are dozens of different agentic coding assistants around right now, from Claude Code (Anthropic) and Codex (OpenAI) to Kiro (Amazon) and Goose (Block). Other open source coding agents include OpenCode, Aider, and Pi.
+There are dozens of different agentic coding assistants around right now, from Claude Code (Anthropic) and Codex (OpenAI) to Kiro (Amazon) and Goose (Block). Other coding agents include Windsurf, Cursor, OpenCode, and the Pi agent by Mario Zechner.
 
-These human-in-the-loop coding agents are typically mutually exclusive with more autonomous programmatic agent frameworks (e.g., smolagents, PydanticAI, CrewAI).
+Human-in-the-loop coding agents are typically mutually exclusive with more autonomous programmatic agent frameworks (e.g., smolagents, PydanticAI, CrewAI).
 
 As it turns out, having a programmatic API to a coding agent harness is incredibly useful.
 
@@ -22,7 +22,7 @@ Until recently, most coding agents lacked programmatic APIs. Proprietary ones lo
 
 Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. Codex now also [has an SDK](https://developers.openai.com/codex/sdk/). Pi also includes [a powerful SDK](https://github.com/badlogic/pi-mono/blob/HEAD/packages/coding-agent/docs/sdk.md).
 
-More recently, I started a hobby project called [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent harness that implements both a terminal UI and a Python API. As I'll illustrate below, when coding agents aren't designed as composable libraries, entire categories of workflows become difficult or impossible.
+I recently started a project called [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent harness written entirely in Python that implements both a terminal UI and an SDK. As I'll illustrate below, when coding agents aren't designed as composable libraries, entire categories of workflows become difficult or impossible.
 
 The Ralph Wiggum technique—where an agent iterates autonomously until completion—demonstrates this perfectly. Geoffrey Huntley [pioneered the approach](https://ghuntley.com/ralph/) in July 2025 with a 5-line bash script hack:
 
@@ -304,15 +304,15 @@ def ralph_loop_with_budget(prompt, completion_promise, max_cost=5.0):
 ```
 
 
-**Option 2: Switch to cheaper model whenever you want**
+**Option 2: Switch to local (or cheaper) model whenever you want**
 ```python
 # Use more expensive Claude Opus 4.5 at first
 agent = create_agent(model="anthropic/claude-opus-4-5")
 initial_response = agent.run(prompt)
 
 if some_condition_is_met(initial_response, agent.cumulative_cost):
-    # Switch to cheaper model
-    agent = create_agent(model="anthropic/claude-haiku-4-5")
+    # Switch to local model (free!)
+    agent = create_agent(model="ollama_chat/gpt-oss:20b")
     ralph_loop(agent, prompt, completion_promise)
 ```
 
