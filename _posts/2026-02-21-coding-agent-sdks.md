@@ -22,7 +22,9 @@ Until recently, most coding agents lacked programmatic APIs. Proprietary ones lo
 
 Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. Codex now also [has an SDK](https://developers.openai.com/codex/sdk/). Pi also includes [a powerful SDK](https://github.com/badlogic/pi-mono/blob/HEAD/packages/coding-agent/docs/sdk.md).
 
-I recently started a project called [PatchPal](https://github.com/amaiya/patchpal), an open-source coding agent harness written entirely in Python that implements both a terminal UI and an SDK. As I'll illustrate below, when coding agents aren't designed as composable libraries, entire categories of workflows become difficult or impossible.
+[PatchPal](https://github.com/amaiya/patchpal) is a newer coding agent harness written entirely in Python that implements both a terminal UI and an SDK.
+
+As I'll illustrate below, when coding agents aren't designed as composable libraries, entire categories of workflows become difficult or impossible.
 
 The Ralph Wiggum technique—where an agent iterates autonomously until completion—demonstrates this perfectly. Geoffrey Huntley [pioneered the approach](https://ghuntley.com/ralph/) in July 2025 with a 5-line bash script hack:
 
@@ -197,11 +199,11 @@ ralph_loop(
     max_iterations=1
 )
 
-# Switch to cheaper model for refinement iterations
+# Switch to local model for refinement iterations (no API charges)
 ralph_loop(
     prompt="Continue the work. Fix any failing tests. Output: <promise>COMPLETE</promise> when done.",
     completion_promise="COMPLETE",
-    model="anthropic/claude-haiku-4-5",
+    model="ollama_chat/gpt-oss:120b",
     max_iterations=20
 )
 ```
@@ -322,6 +324,10 @@ def ralph_loop_with_budget(prompt, completion_promise, max_cost=5.0):
 
 
 **Option 2: Switch to local model whenever you want**
+
+While switching to local models was covered above with `ralph_loop`, this section demonstrates fine-grained control
+over when the switch occurs.
+
 ```python
 # Use more expensive Claude Opus 4.5 at first
 agent = create_agent(model="anthropic/claude-opus-4-5")
@@ -329,7 +335,7 @@ initial_response = agent.run(prompt)
 
 if some_condition_is_met(initial_response, agent.cumulative_cost):
     # Switch to local model (free!)
-    agent = create_agent(model="ollama_chat/gpt-oss:20b")
+    agent = create_agent(model="ollama_chat/gpt-oss:120b")
     response = agent.run(prompt)
 ```
 
