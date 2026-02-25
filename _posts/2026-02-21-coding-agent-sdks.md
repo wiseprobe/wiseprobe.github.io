@@ -20,12 +20,11 @@ Most use coding agents through a terminal, web, or desktop UI, but having a prog
 
 Until recently, most coding agents lacked programmatic APIs. Proprietary ones locked you into their UIs. The open-source ones (OpenCode, Aider, Goose) are open and extensible, but they're large, complex frameworks designed primarily for terminal interaction—not simple libraries you can import and compose.
 
-Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. (The [nanoclaw[(https://github.com/qwibitai/nanoclaw) project, which has received a great amount of attention recently, is powered by the Claude Agent SDK.)
+Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. (The [nanoclaw](https://github.com/qwibitai/nanoclaw) project, which has received a considerable attention recently, is powered by the Claude Agent SDK.)
 
 [PatchPal](https://github.com/amaiya/patchpal) is a newer coding agent harness written entirely in Python that implements both a terminal UI and a powerful SDK.
 
-Other examples include the [Codex SDK](https://developers.openai.com/codex/sdk/) and the [Pi project's SDK](https://github.com/badlogic/pi-mono/blob/HEAD/packages/coding-agent/docs/sdk.md).
-
+Other examples include the [Codex SDK](https://developers.openai.com/codex/sdk/) and the [Pi SDK](https://github.com/badlogic/pi-mono/blob/HEAD/packages/coding-agent/docs/sdk.md).
 
 When coding agents aren't designed as composable libraries, entire categories of workflows become difficult or impossible. 
 
