@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Things You Can Do With a Coding Agent SDK"
+title: "Coding Agent SDKs as a general-purpose automation layer"
 categories: [Technology, AI]
 tags: [ai agents, agent harness, python, ralph wiggum, patchpal]
 ---
@@ -11,18 +11,18 @@ tags: [ai agents, agent harness, python, ralph wiggum, patchpal]
 
 There are dozens of different agentic coding assistants around right now, from Claude Code (Anthropic) and Codex (OpenAI) to Kiro (Amazon) and Goose (Block). Other coding agents include Windsurf, Cursor, OpenCode, and the Pi agent by Mario Zechner.
 
-Human-in-the-loop coding agents are typically mutually exclusive with more autonomous programmatic agent frameworks (e.g., smolagents, PydanticAI, CrewAI).
-
 Most use coding agents through a terminal, web, or desktop UI, but having a programmatic API to a coding agent harness is incredibly useful.
+
+Thanks to the viral releases of projects like [OpenClaw](https://github.com/openclaw/openclaw) and [NanoClaw](https://github.com/qwibitai/nanoclaw), coding agent SDKs are now receiving more attention.
 
 
 ## The API Problem (and Recent Solutions)
 
 Until recently, most coding agents lacked programmatic APIs. Proprietary ones locked you into their UIs. The open-source ones (OpenCode, Aider, Goose) are open and extensible, but they're large, complex frameworks designed primarily for terminal interaction—not simple libraries you can import and compose.
 
-Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. (The [nanoclaw](https://github.com/qwibitai/nanoclaw) project, which has received a considerable attention recently, is powered by the Claude Agent SDK.)
+Anthropic has since released the [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (September 2025, formerly Claude Code SDK), bringing programmatic Python and TypeScript APIs to Claude-based agents. (The [nanoclaw](https://github.com/qwibitai/nanoclaw) project, recently [tweeted by Andrej Karpathy](https://x.com/karpathy/status/2024987174077432126), is powered by the Claude Agent SDK.)
 
-[PatchPal](https://github.com/amaiya/patchpal) is a newer coding agent harness written entirely in Python that implements both a terminal UI and a versatile SDK.
+[PatchPal](https://github.com/amaiya/patchpal) is a newer coding agent harness written entirely in Python that implements both a terminal UI and a Python SDK.
 
 Other examples include the [Codex SDK](https://developers.openai.com/codex/sdk/) and the [Pi SDK](https://github.com/badlogic/pi-mono/blob/HEAD/packages/coding-agent/docs/sdk.md).
 
