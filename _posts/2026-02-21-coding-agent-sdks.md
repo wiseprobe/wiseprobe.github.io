@@ -302,6 +302,24 @@ else:
 
 All file operations, git tools, code analysis, and other built-in tools are available as importable functions. See the [Built-In Tools documentation](https://amaiya.github.io/patchpal/features/tools/) for the complete list.
 
+**Custom Tools:** You can also inject your own Python functions as tools. For example, adding domain-specific functions like `query_database()` or `call_api()`:
+
+```python
+def get_user_count() -> str:
+    """Get total user count from database.
+    
+    Returns:
+        User count as string
+    """
+    # Your database logic here
+    return "Total users: 1,234"
+
+agent = create_agent(custom_tools=[get_user_count])
+agent.run("How many users do we have?")  # Agent calls get_user_count() automatically
+```
+
+Custom tools can be added globally (`~/.patchpal/tools/`), per-repository (`.patchpal/tools/`), or programmatically via the `custom_tools` parameter. See the [Custom Tools documentation](https://amaiya.github.io/patchpal/features/custom-tools/) for details.
+
 ### Cost Optimization
 
 Running 30+ iterations with Claude Opus 4.5 or Claude Sonnet 4.5 can get expensive. Let's look at cost optimization a little further.
