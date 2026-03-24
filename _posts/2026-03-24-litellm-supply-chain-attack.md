@@ -54,7 +54,26 @@ We need **defense in depth** — multiple layers of protection so that if one fa
 
 ## Container Isolation: The First Layer
 
-Running AI agents in containers provides immediate benefits:
+Running AI agents in containers provides immediate benefits. The [PatchPal](https://github.com/amaiya/patchpal) agent harness includes a `patchpal-sandbox` command that runs the agent in an isolated Docker or Podman container, automatically handling the complexity of container setup.
+
+### What is patchpal-sandbox?
+
+`patchpal-sandbox` is a command-line tool that wraps PatchPal in a container with configurable security policies:
+
+```bash
+# Basic usage - runs PatchPal in isolated container
+patchpal-sandbox -- --model anthropic/claude-sonnet-4-5
+
+# With network restrictions (explained below)
+patchpal-sandbox --restrict-network -- --model anthropic/claude-sonnet-4-5
+
+# With custom environment variables
+patchpal-sandbox --env-file .env -- --model bedrock/...
+```
+
+The `--` separator distinguishes sandbox options (left side) from PatchPal arguments (right side).
+
+### Benefits of Container Isolation
 
 ### 1. Ephemeral Filesystem
 Containers with `--rm` flags are destroyed after each session:
