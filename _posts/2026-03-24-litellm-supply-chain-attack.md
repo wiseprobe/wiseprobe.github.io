@@ -380,6 +380,5 @@ For teams working in regulated environments (GovCloud, healthcare, finance), net
 - [PatchPal GitHub Repository](https://github.com/amaiya/patchpal) - AI coding agent with network isolation support
 - [FutureSearch Blog: LiteLLM Supply Chain Attack](https://futuresearch.ai/blog/litellm-pypi-supply-chain-attack/) - Detailed attack analysis
 - [PatchPal Sandbox Documentation](https://amaiya.github.io/patchpal/usage/sandbox/) - Container usage guide
-- [Network Restrictions Guide](https://github.com/amaiya/patchpal) - Implementation details
 
 **Acknowledgments:** Thanks to the team at FutureSearch for their detailed analysis of the attack, and to the Python security team for their rapid response in yanking the compromised packages.
