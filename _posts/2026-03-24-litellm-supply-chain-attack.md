@@ -89,12 +89,13 @@ By default, containers don't have access to:
 - Other containers or processes
 
 ### 3. Controlled Credential Exposure
-Only explicitly passed credentials are visible:
+Credentials from environment variables and `.env` files are passed to the container:
 ```bash
-# Only this specific .env file is accessible
+# Environment variables (AWS_*, OPENAI_*, etc.) from host shell are passed through
+# Plus any additional variables from .env file
 patchpal-sandbox --env-file .env -- --model bedrock/...
 
-# Host's ~/.aws credentials remain inaccessible
+# But ~/.aws/credentials file remains inaccessible (not mounted)
 ```
 
 But containers alone aren't enough. A compromised container can still:
