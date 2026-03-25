@@ -369,4 +369,4 @@ This is defense in depth. No single layer is perfect, but together they make att
 - [FutureSearch Blog: LiteLLM Supply Chain Attack](https://futuresearch.ai/blog/litellm-pypi-supply-chain-attack/) - Detailed attack analysis
 - [PatchPal Sandbox Documentation](https://amaiya.github.io/patchpal/usage/sandbox/) - Container usage guide
 
-**Acknowledgments:** Thanks to the team at FutureSearch for their detailed analysis of the attack, and to the Python security team for their rapid response in yanking the compromised packages.
+**Acknowledgments:** Thanks to the team at FutureSearch for their detailed analysis of the attack, and to the PyPI administrators for their rapid response in yanking the compromised packages.
