@@ -89,13 +89,15 @@ By default, containers don't have access to:
 - Other containers or processes
 
 ### 3. Controlled Credential Exposure
-Credentials from environment variables and `.env` files are passed to the container:
+Only credentials from `.env` files are passed when `--env-file` is used:
 ```bash
-# Environment variables (AWS_*, OPENAI_*, etc.) from host shell are passed through
-# Plus any additional variables from .env file
+# With --env-file: ONLY variables from .env are passed (host env excluded)
 patchpal-sandbox --env-file .env -- --model bedrock/...
 
-# But ~/.aws/credentials file remains inaccessible (not mounted)
+# Without --env-file: Host environment variables are passed through
+patchpal-sandbox -- --model openai/gpt-5-mini
+
+# Either way: ~/.aws/credentials file remains inaccessible (not mounted)
 ```
 
 But containers alone aren't enough. A compromised container can still:
@@ -357,23 +359,6 @@ Supply chain attacks like the LiteLLM incident demonstrate why relying on any si
 But **layered defenses** — version pinning + container isolation + network restrictions + minimal credentials — create a security posture where an attacker must bypass multiple independent barriers.
 
 This is defense in depth. No single layer is perfect, but together they make attacks dramatically harder.
-
-## Conclusion
-
-Supply chain attacks on development tools are increasingly common across all ecosystems — Python (PyPI), JavaScript (npm), Ruby (RubyGems), and others. As AI coding agents become more powerful and widely deployed, they become more attractive targets because they often run with elevated privileges and access to sensitive codebases.
-
-The solution isn't to avoid AI agents or distrust all dependencies. It's to architect systems with multiple layers of protection:
-
-1. **Container isolation** limits damage scope
-2. **Network restrictions** prevent exfiltration
-3. **Ephemeral containers** prevent persistence
-4. **Minimal credentials** reduce exposure
-5. **Version pinning** prevents known-bad versions
-6. **Audit logging** enables detection
-
-When implemented together, these measures can protect sensitive environments even when dependencies are compromised.
-
-For teams working in regulated environments (GovCloud, healthcare, finance), network-isolated containers aren't optional — they're essential. The good news is that with proper tooling, they can be as easy to use as unrestricted containers.
 
 ---
 
