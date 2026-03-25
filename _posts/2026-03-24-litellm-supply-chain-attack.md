@@ -37,7 +37,7 @@ Full details: [FutureSearch Blog Post](https://futuresearch.ai/blog/litellm-pypi
 
 ## The AI Coding Agent Problem
 
-AI coding agents including our own agent harness [PatchPal](https://github.com/amaiya/patchpal) face a fundamental security challenge: they need broad system access to read code, run commands, and make changes, while simultaneously depending on large dependency trees that could be compromised.
+AI coding agents, including our own agent harness [PatchPal](https://github.com/amaiya/patchpal), face a fundamental security challenge: they need broad system access to read code, run commands, and make changes, while relying on external dependencies that could be compromised.
 
 The LiteLLM incident is just the latest in a growing trend. The year 2025 saw a surge in supply chain attacks across ecosystems:
 - **npm/TypeScript**: [Supply chain attack compromised nearly 20 popular packages](https://www.cpomagazine.com/cyber-security/supply-chain-attack-infects-nearly-20-popular-npm-packages-with-billions-of-weekly-downloads/) with billions of weekly downloads, injecting crypto-stealing code
@@ -87,6 +87,8 @@ By default, containers don't have access to:
 - Host shell history
 - Host environment variables
 - Other containers or processes
+
+The container only has access to the specific working directory where `patchpal-sandbox` was started.
 
 ### 3. Controlled Credential Exposure
 Only credentials from `.env` files are passed when `--env-file` is used:
