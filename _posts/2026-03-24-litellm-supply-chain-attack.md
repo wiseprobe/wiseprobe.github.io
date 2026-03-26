@@ -213,31 +213,30 @@ patchpal-sandbox --restrict-network \
   -- --model anthropic/claude-sonnet-4-5
 ```
 
-## The Tiktoken Gotcha
+## Implementation Note: LiteLLM and Tiktoken
 
-An interesting discovery during implementation: even though modern versions of PatchPal don't use tiktoken directly, LiteLLM still does internally for token counting. Tiktoken downloads encoding files from `https://openaipublic.blob.core.windows.net/` on first use.
+An interesting technical detail emerged during implementation: LiteLLM uses tiktoken internally for token counting, and older versions of PatchPal (< 0.22.0) also used it directly. Tiktoken requires encoding files that it typically downloads from `https://openaipublic.blob.core.windows.net/`.
 
-If we enable the firewall before tiktoken initializes, PatchPal hangs trying to download encodings that are now blocked. The solution:
+However, **modern versions handle this automatically**:
+
+1. **LiteLLM bundles tiktoken encodings**: Starting around version 1.50.0, LiteLLM includes the tiktoken encoding files (~7.5MB) directly in its Python package. No download from `openaipublic.blob.core.windows.net` is needed. This was added to support air-gapped environments ([GitHub issue #1071](https://github.com/BerriAI/litellm/issues/1071)).
+
+2. **PatchPal 0.22.0+ doesn't use tiktoken**: Newer PatchPal versions use character-based token estimation (~3 chars per token) as a fallback when actual token counts from API responses are unavailable. This is reliable for code and requires no network access.
+
+3. **The bundled files work automatically**: LiteLLM's cache management sets up the bundled files when needed, even after firewall rules are in place.
+
+The key lesson: **Don't manually override LiteLLM's cache management**. Let LiteLLM handle its own cache automatically.
+
+The network isolation implementation is straightforward - just set up the firewall:
 
 ```bash
-# Pre-download tiktoken encodings BEFORE firewall setup
-python3 -c "import tiktoken; tiktoken.encoding_for_model('gpt-4')"
-
-# THEN set up firewall rules
-iptables -A OUTPUT -j DROP
-```
-
-This is why the network isolation script has a pre-download phase:
-```bash
-echo "=== Pre-downloading required data ==="
-python3 -c "import tiktoken; ..."
-python3 -c "import litellm; ..."
-
 echo "=== Setting up network restrictions ==="
+# Configure iptables rules
+iptables -A OUTPUT -d <allowed-ips> -p tcp --dport 443 -j ACCEPT
 iptables -A OUTPUT -j DROP
 ```
 
-Anything that might download data from the internet must be cached first.
+The only network attempt is LiteLLM trying to fetch an updated model cost map from GitHub, which fails gracefully with a fallback to bundled data.
 
 ## Testing Network Restrictions
 
