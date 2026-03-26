@@ -213,30 +213,38 @@ patchpal-sandbox --restrict-network \
   -- --model anthropic/claude-sonnet-4-5
 ```
 
-## Implementation Note: LiteLLM and Tiktoken
+## Implementation Note: Pre-downloading LiteLLM Dependencies
 
-An interesting technical detail emerged during implementation: LiteLLM uses tiktoken internally for token counting, and older versions of PatchPal (< 0.22.0) also used it directly. Tiktoken requires encoding files that it typically downloads from `https://openaipublic.blob.core.windows.net/`.
+An interesting technical detail emerged during implementation: LiteLLM tries to download an updated model cost map from `https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json` on first import. If the firewall is already enabled when this happens, the connection attempt will hang and timeout, delaying startup.
 
-However, **modern versions handle this automatically**:
+Additionally, older versions of PatchPal (< 0.22.0) use tiktoken for token counting, which historically required downloading encoding files from `https://openaipublic.blob.core.windows.net/`. However, **LiteLLM fixed this** by bundling the tiktoken encoding files (~7.5MB) directly in the package starting around version 1.50.0. This was added to support air-gapped environments ([GitHub issue #1071](https://github.com/BerriAI/litellm/issues/1071)).
 
-1. **LiteLLM bundles tiktoken encodings**: Starting around version 1.50.0, LiteLLM includes the tiktoken encoding files (~7.5MB) directly in its Python package. No download from `openaipublic.blob.core.windows.net` is needed. This was added to support air-gapped environments ([GitHub issue #1071](https://github.com/BerriAI/litellm/issues/1071)).
+### The Pre-download Solution
 
-2. **PatchPal 0.22.0+ doesn't use tiktoken**: Newer PatchPal versions use character-based token estimation (~3 chars per token) as a fallback when actual token counts from API responses are unavailable. This is reliable for code and requires no network access.
-
-3. **The bundled files work automatically**: LiteLLM's cache management sets up the bundled files when needed, even after firewall rules are in place.
-
-The key lesson: **Don't manually override LiteLLM's cache management**. Let LiteLLM handle its own cache automatically.
-
-The network isolation implementation is straightforward - just set up the firewall:
+To avoid hangs and ensure fast startup with network isolation enabled, the implementation pre-downloads all required data before setting up the firewall:
 
 ```bash
+echo "=== Pre-downloading required data (before network restrictions) ==="
+
+# Pre-download tiktoken encodings
+# (LiteLLM bundles these, but older containers may need to download)
+python3 -c "import tiktoken; tiktoken.encoding_for_model('gpt-4')"
+
+# Pre-import litellm (downloads model cost map from GitHub)
+python3 -c "import litellm"
+
 echo "=== Setting up network restrictions ==="
-# Configure iptables rules
+# Now configure iptables rules - everything is cached
 iptables -A OUTPUT -d <allowed-ips> -p tcp --dport 443 -j ACCEPT
 iptables -A OUTPUT -j DROP
 ```
 
-The only network attempt is LiteLLM trying to fetch an updated model cost map from GitHub, which fails gracefully with a fallback to bundled data.
+This ensures:
+- **Fast startup**: No hanging waiting for blocked connections
+- **Version compatibility**: Works with both old (PatchPal 0.21.x) and new (0.22.0+) container images
+- **Complete isolation**: After the firewall is enabled, no network access is attempted - everything runs from cached data
+
+Note: PatchPal 0.22.0+ uses character-based token estimation (~3 chars per token) as a fallback when actual token counts from API responses are unavailable, further reducing dependency on tiktoken.
 
 ## Testing Network Restrictions
 
