@@ -116,7 +116,8 @@ Network isolation prevents compromised code from communicating with the outside 
 
 For example, when working with AWS Bedrock:
 - **Needed**: Access to `bedrock-runtime.us-gov-east-1.amazonaws.com`
-- **Not needed**: Access to random domains, metadata endpoints, or exfiltration targets
+- **Not needed**: Access to arbitrary domains or cloud metadata endpoints
+- **Possibly needed**: Package repositories like PyPI (if installing dependencies at runtime)
 
 ### How Network Restrictions Work
 
@@ -125,8 +126,8 @@ Using iptables firewall rules inside the container:
 ```bash
 # Allow only specific endpoints
 patchpal-sandbox --restrict-network \
-  --allow-url https://bedrock-runtime-fips.us-gov-east-1.amazonaws.com \
-  -- --model "arn:aws-us-gov:bedrock:us-gov-east-1:..."
+  --allow-url https://api.anthropic.com \
+  -- --model anthropic/claude-sonnet-4-5
 ```
 
 This creates a default-deny firewall that:
@@ -204,7 +205,12 @@ Supported auto-detection:
 - **Google AI**, **Groq**, **Cohere**, **Together**, **Replicate**: Respective API keys
 - **Custom endpoints**: `*_BASE_URL`, `*_API_BASE`, `*_ENDPOINT` variables
 
-Additional URLs can still be added:
+### Adding Additional URLs
+
+In some scenarios, you may need to allow access beyond the auto-detected LLM endpoints. The most common case is allowing access to package repositories like PyPI if your agent needs to install Python packages at runtime.
+
+You can add additional URLs with the `--allow-url` flag:
+
 ```bash
 # Auto-detect LLM endpoint + allow PyPI for pip install
 patchpal-sandbox --restrict-network \
@@ -212,6 +218,13 @@ patchpal-sandbox --restrict-network \
   --allow-url https://files.pythonhosted.org \
   -- --model anthropic/claude-sonnet-4-5
 ```
+
+Common additional URLs include:
+- **PyPI**: `https://pypi.org` and `https://files.pythonhosted.org` (for `pip install`)
+- **GitHub**: `https://github.com` and `https://api.github.com` (for git operations)
+- **npm**: `https://registry.npmjs.org` (for Node.js packages)
+
+**Security Note**: Only add URLs that are strictly necessary for your workflow. Each additional URL increases the attack surface - while still much better than unrestricted access, a compromised allowed domain could potentially receive exfiltrated data.
 
 ## Implementation Note: Pre-downloading LiteLLM Dependencies
 
