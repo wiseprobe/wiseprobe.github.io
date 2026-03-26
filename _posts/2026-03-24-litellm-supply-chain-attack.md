@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Supply Chain Attacks and Defense in Depth for AI Coding Agents"
+title: "Preventing Data Exfiltration in AI Coding Agents: Lessons from the LiteLLM Attack"
 categories: [Security, AI]
 tags: [supply chain attack, security, ai agents, containers, network isolation]
 ---
