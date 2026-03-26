@@ -389,7 +389,6 @@ Supply chain attacks like the LiteLLM incident demonstrate why relying on any si
 
 But **layered defenses** — version pinning + container isolation + network restrictions + minimal credentials — create a security posture where an attacker must bypass multiple independent barriers.
 
-This is defense in depth. No single layer is perfect, but together they make attacks dramatically harder.
 
 ---
 
