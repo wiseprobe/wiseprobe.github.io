@@ -33,7 +33,7 @@ The malicious LiteLLM releases contained a `.pth` file that executed automatical
 
 The attack was discovered when it triggered an accidental fork bomb (a bug in the malware), causing systems to crash. The compromised versions have since been yanked from PyPI.
 
-Full details: [FutureSearch Blog Post](https://futuresearch.ai/blog/litellm-pypi-supply-chain-attack/)
+Source with full details: [FutureSearch Blog Post](https://futuresearch.ai/blog/litellm-pypi-supply-chain-attack/)
 
 ## The AI Coding Agent Problem
 
