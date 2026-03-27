@@ -79,11 +79,13 @@ The `--` separator distinguishes sandbox options (left side) from PatchPal argum
 
 ### Benefits of Container Isolation
 
-### 1. Ephemeral Filesystem
-Containers with `--rm` flags are destroyed after each session:
-- Malware persistence mechanisms (like `~/.config/sysmon/sysmon.py`) disappear on exit
-- Backdoors don't survive to the next session
-- No permanent foothold on the host system
+### 1. Ephemeral Container Filesystem
+Containers run with `--rm` provide an ephemeral internal filesystem: when the container exits, it is deleted along with all changes made during execution.
+- Malware persistence mechanisms (e.g., files written to `~/.config/...`) are removed on exit
+- Backdoors or modifications within the container do not persist across sessions
+- No lasting foothold remains within the container environment
+
+**Note:** This ephemerality applies only to the container's internal filesystem. The mounted working directory (where your code resides) persists by design, allowing the agent to make intended changes to your project files.
 
 ### 2. Limited Host Access
 By default, containers don't have access to:
