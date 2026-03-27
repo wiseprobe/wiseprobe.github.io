@@ -39,6 +39,10 @@ Source with full details: [FutureSearch Blog Post](https://futuresearch.ai/blog/
 
 AI coding agents, including our own agent harness [PatchPal](https://github.com/amaiya/patchpal), face a fundamental security challenge: they need broad system access to read code, run commands, and make changes, while relying on external dependencies that could be compromised.
 
+Coding agents face threats from multiple vectors. Beyond supply chain attacks like LiteLLM, researchers at Trail of Bits demonstrated [successful prompt injection attacks against GitHub Copilot](https://blog.trailofbits.com/2025/08/06/prompt-injection-engineering-for-attackers-exploiting-github-copilot/) that tricked the agent into inserting backdoors into production code. In their demonstration, a malicious GitHub issue (hidden using HTML `<picture>` tags invisible to maintainers) caused Copilot to download and execute an attacker's bash script while installing seemingly legitimate dependencies. The backdoor was hidden in the `uv.lock` file—a location developers rarely scrutinize during code review.
+
+These attacks share a common characteristic: **they exploit the privileged access and automated execution environment that coding agents operate within**. Whether through compromised dependencies or manipulated prompts, the result is the same—attackers gain the ability to execute code, exfiltrate data, or modify software under the guise of legitimate agent operations.
+
 The LiteLLM incident is just the latest in a growing trend. The year 2025 saw a surge in supply chain attacks across ecosystems:
 - **npm/TypeScript**: [Supply chain attack compromised nearly 20 popular packages](https://www.cpomagazine.com/cyber-security/supply-chain-attack-infects-nearly-20-popular-npm-packages-with-billions-of-weekly-downloads/) with billions of weekly downloads, injecting crypto-stealing code
 - **PyPI**: [Surge of malicious packages detected starting August 2025](https://thehackernews.com/2025/08/malicious-pypi-and-npm-packages.html), exploiting developer trust to establish persistence and achieve code execution
