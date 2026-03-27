@@ -120,8 +120,8 @@ This is where network isolation becomes critical.
 
 Network isolation prevents compromised code from communicating with the outside world. The key insight: **Most AI agent operations don't need unrestricted network access**.
 
-For example, when working with AWS Bedrock:
-- **Needed**: Access to `bedrock-runtime.us-gov-east-1.amazonaws.com`
+For example, when working with Anthropic's Claude:
+- **Needed**: Access to `api.anthropic.com`
 - **Not needed**: Access to arbitrary domains or cloud metadata endpoints
 - **Possibly needed**: Package repositories like PyPI (if installing dependencies at runtime)
 
