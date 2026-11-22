@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Applying NVIDIA''s "You Don''t Need Long Context" to a Coding Agent on a 4B Model and a 6GB GPU'
+title: 'Applying NVIDIA''s "You Don''t Need Long Context" to a Coding Agent Using a 4B Model on a 6GB GPU'
 categories: [Technology, AI]
 tags: [ai agents, agent harness, local llms, small language models, ollama, patchpal]
 ---
