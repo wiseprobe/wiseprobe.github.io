@@ -5,7 +5,7 @@ categories: [Technology, AI]
 tags: [ai agents, agent harness, local llms, small language models, ollama, patchpal]
 ---
 
-Most coding agents assume a frontier model in the cloud. That isn't always an option: the code may be sensitive, API costs add up, or you want something that runs on the laptop in front of you. Small open models like Gemma 4 E4B and Qwen3.5 4B now handle tool calling well enough to be useful, and they run on modest hardware.
+Most coding agent harnesses are used with frontier models in the cloud. That isn't always an option: the code may be sensitive, API costs add up, or you want something that runs on the laptop in front of you. Small open models like Gemma 4 E4B and Qwen3.5 4B now handle tool calling well enough to be useful, and they run on modest hardware.
 
 On a laptop with an NVIDIA RTX A1000 (6GB of VRAM), Gemma 4 E4B and Qwen3.5 4B served by Ollama both run entirely on the GPU with a 32K or even 16K context window, using about ~4GB of GPU memory and generating about 35 tokens per second. That window is a fraction of the 200K or more that agents are usually designed around.
 
