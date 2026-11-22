@@ -45,9 +45,12 @@ patchpal --model ollama_chat/qwen3.5:4b
 # 🔧 Tiny agent (context window 16,384 ≤ 65,536): handoff compaction, selective reading
 ```
 
-It's also available from Python:
+It's also available from Python. The context limit still has to match the server's window:
 
 ```python
+import os
+os.environ["PATCHPAL_CONTEXT_LIMIT"] = "16384"  # match OLLAMA_CONTEXT_LENGTH
+
 from patchpal.agent import create_tiny_agent
 
 agent = create_tiny_agent(model_id="ollama_chat/qwen3.5:4b")
@@ -58,7 +61,7 @@ To force it on or off regardless of window size, set `PATCHPAL_TINY_MODE=true` o
 
 ## An Example Session
 
-Here is a real session with Qwen3.5 4B at 16K, asking it to read and summarize TinyAgent's own 520-line source file:
+Here is a real session with Qwen3.5 4B at 16K, asking it to read and summarize TinyAgent's own source file, about 500 lines long:
 
 ```
 You: read and summarize patchpal/agent/tiny.py
@@ -97,6 +100,56 @@ Agent:
 The file is three times larger than one read allows, so the first read was cut off with a hint saying where to continue. The model followed the hints through most of the file, recovered from one empty response, and compacted once at the end, taking usage from 83% to 39%. Its summary got the file's purpose, structure and mechanisms right, including the exact formula for the tool output cap.
 
 It wasn't perfect, as described below.
+
+### Writing Code
+
+Reading a file is the easy case. Here is a coding task, run with Gemma 4 E4B at 32K on the same GPU (more on that model below). It asks for a script that lists the headings in PatchPal's 25 documentation files, which is harder than it sounds: the docs contain dozens of shell examples whose `# comments` look exactly like markdown headings. The prompt points the model at `docs/configuration.md`, the file with the most `#` comments inside code blocks, and asks for its headings so the results can be checked against the script's real output.
+
+```
+You: Write a Python script at scripts/extract_headings.py that extracts all headings and
+subheadings from markdown files.
+
+- Take a directory as an optional argument (default: docs) and search it recursively
+  for .md files.
+- For each file, print its path, then its headings indented by level (two spaces per
+  level below #).
+- Skip lines inside fenced code blocks (``` or ~~~), since shell comments there start
+  with # but aren't headings. A block opened with ``` closes only with ```, and one
+  opened with ~~~ closes only with ~~~.
+- At the end, print the number of files and the total number of headings.
+- Use only the Python standard library.
+
+Test it on the existing files in docs; don't create or modify any files there.
+docs/configuration.md has many # comments inside code blocks, so check that none
+of them appear in its output. When you're done, show me the final counts and the
+headings found for docs/configuration.md.
+
+📝 Patching: scripts/extract_headings.py
+⚡ Running: python3 scripts/extract_headings.py
+
+Agent:
+  The script scripts/extract_headings.py has been written and tested successfully on
+  the docs directory.
+
+  Overall Processing Summary:
+    • Total files processed: 25
+    • Total headings found: 331
+
+  Headings found specifically for docs/configuration.md:
+    Configuration
+      Model Selection
+        AWS Bedrock with SSO / ADFS
+      Security & Permissions
+        Maximum Security Mode
+        Environment Variables
+      Operational Controls
+      Context Window Management
+      ...
+```
+
+The model wrote the script and ran it in two steps, and its results were correct: 25 files and 331 headings, with none of the 67 `#` comments inside the code blocks of `configuration.md` counted as headings. A version of the same script without the code-block check finds 760.
+
+Reading the code showed one gap. The script treats any fence line as opening or closing a code block, so it ignores the rule that a block opened with ```` ``` ```` closes only with ```` ``` ````. None of PatchPal's docs mix the two kinds of fence, so the results weren't affected, but the model said it had done everything asked. The output was right, and the claim was not.
 
 ## How TinyAgent Works
 
@@ -173,7 +226,28 @@ That makes a 4B model on a small GPU best suited to focused tasks:
 
 In the example session, the model's summary of `tiny.py` got the structure and most details right, but several specific values were wrong: it said compaction triggers at 90% (it's 80%) and allows 10 handoffs per turn (it's 5). Those settings are defined in a different file the model never read, so it guessed plausible values instead of saying it didn't know. The lesson for small models: trust what they read, and verify specifics they didn't.
 
-If your GPU has more memory, spend it on a larger window first: 32K gives TinyAgent much more room between compactions. A larger model helps after that.
+If you have memory to spare, spend it on a larger window first: 32K gives TinyAgent much more room between compactions. A larger model helps after that. On the same 6GB GPU, Gemma 4 E4B runs entirely on the GPU with a 32K window, using about 3.2GB of GPU memory and generating about 25 tokens per second. The main example in this post uses a 16K window even though 32K works, to show TinyAgent under tighter constraints.
+
+Here is the same request with Gemma 4 E4B at 32K:
+
+```
+You: Read and summarize ./patchpal/agent/tiny.py
+
+📖 Reading: ./patchpal/agent/tiny.py
+⚠️  Tool output truncated: 23,045 chars → 14,745 chars
+
+The file content was truncated, so I will read the rest of the file from line 341 to complete the summary.
+
+📖 Reading lines 341-634: ./patchpal/agent/tiny.py
+
+Agent:
+  The file ./patchpal/agent/tiny.py defines TinyAgent, a specialized agent built on top of
+  PatchPalAgent, specifically optimized for models with limited context windows (typically
+  <= 64K tokens).
+  ...
+```
+
+With Gemma 4 E4B at 32K, the same request took two reads instead of four, needed no compaction, and the summary contained no wrong values. Rather than guessing the compaction threshold and handoff limit, it named the settings without stating their values. The model changed as well as the window, so this isn't a controlled comparison, but it shows how much a 32K window helps on a 6GB GPU.
 
 ## Conclusion
 
