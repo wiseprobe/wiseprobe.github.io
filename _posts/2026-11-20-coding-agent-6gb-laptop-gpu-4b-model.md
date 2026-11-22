@@ -1,15 +1,15 @@
 ---
 layout: post
-title: "Running a Coding Agent on a 6GB Laptop GPU With a 4B Model"
+title: 'Applying NVIDIA''s "You Don''t Need Long Context" to a Coding Agent on a 4B Model and a 6GB GPU'
 categories: [Technology, AI]
 tags: [ai agents, agent harness, local llms, small language models, ollama, patchpal]
 ---
 
-Most coding agents assume a frontier model in the cloud. That isn't always an option: the code may be sensitive, API costs add up, or you want something that runs on the laptop in front of you. Small open models like Qwen3.5 4B now handle tool calling well enough to be useful, and they run on modest hardware.
+Most coding agents assume a frontier model in the cloud. That isn't always an option: the code may be sensitive, API costs add up, or you want something that runs on the laptop in front of you. Small open models like Gemma 4 E4B and Qwen3.5 4B now handle tool calling well enough to be useful, and they run on modest hardware.
 
-On a laptop with an NVIDIA RTX A1000 (6GB of VRAM), Qwen3.5 4B served by Ollama runs entirely on the GPU with a 16K context window, using about 4.1GB of GPU memory and generating about 35 tokens per second. That window is a fraction of the 200K or more that agents are usually designed around.
+On a laptop with an NVIDIA RTX A1000 (6GB of VRAM), Gemma 4 E4B and Qwen3.5 4B served by Ollama both run entirely on the GPU with 16K or even 32K context window, using about 4.1GB of GPU memory and generating about 25-35 tokens per second. That window is a fraction of the 200K or more that agents are usually designed around.
 
-[PatchPal](https://github.com/amaiya/patchpal) now includes **TinyAgent**, a version of its agent built for this setup. This post explains how to run it, how it works, and what to expect from it.
+[PatchPal](https://github.com/amaiya/patchpal) now includes **TinyAgent**, a version of its agent built for this setup Gemma4:E4B. This post explains how to run it, how it works, and what to expect from it.
 
 ## The Constraints of a Small GPU
 
@@ -23,7 +23,7 @@ Pointing an existing agent harness at a local model doesn't address either limit
 
 ## You Don't Need Long Context
 
-TinyAgent is based on a recent paper, [You don't need long context](https://arxiv.org/html/2611.05306v1) (Belcak et al., 2026). The authors ran agents under hard context limits as small as 8K and found two practices that keep them working:
+TinyAgent is based on a recent paper from NVIDIA Research , [You don't need long context](https://arxiv.org/html/2611.05306v1) (Belcak et al., 2026). The authors ran agents under hard context limits as small as 8K and found two practices that keep them working:
 
 1. **Compact often, to a handoff note.** Instead of a summary of the history, the model writes a short brief for the work still ahead: the objective, what's been established, what's been changed, and what to do next. The conversation then restarts from that note.
 2. **Read selectively.** Large inputs stay on disk and are read in small, bounded pieces instead of being loaded into the conversation.
@@ -32,7 +32,7 @@ With these, frontier models lost little or nothing. On SWE-bench Verified, Opus 
 
 ## Getting Started
 
-TinyAgent is selected automatically when the context limit is 64K tokens or less. PatchPal detects context limits from the model name and can't see the window your server is actually using, so set `PATCHPAL_CONTEXT_LIMIT` to match it:
+TinyAgent is selected automatically when the context limit is 64K tokens or less. PatchPal can't see the window your server is actually using, so set `PATCHPAL_CONTEXT_LIMIT` to match it:
 
 ```bash
 # Terminal 1: serve a 4B model with a 16K window
@@ -41,7 +41,7 @@ ollama serve
 
 # Terminal 2: tell PatchPal the window size and run it
 export PATCHPAL_CONTEXT_LIMIT=16384
-patchpal --model ollama_chat/qwen3.5:4b
+patchpal --model ollama_chat/gemma4:e4b
 # 🔧 Tiny agent (context window 16,384 ≤ 65,536): handoff compaction, selective reading
 ```
 
@@ -149,7 +149,7 @@ Agent:
 
 The model wrote the script and ran it in two steps, and its results were correct: 25 files and 331 headings, with none of the 67 `#` comments inside the code blocks of `configuration.md` counted as headings. A version of the same script without the code-block check finds 760.
 
-Reading the code showed one gap. The script treats any fence line as opening or closing a code block, so it ignores the rule that a block opened with ```` ``` ```` closes only with ```` ``` ````. None of PatchPal's docs mix the two kinds of fence, so the results weren't affected, but the model said it had done everything asked. The output was right, and the claim was not.
+Reading the code showed one gap. The script treats any fence line as opening or closing a code block, so it ignores the rule that a block opened with ```` ``` ```` closes only with ```` ``` ````. None of PatchPal's docs mix the two kinds of fence, so the results weren't affected, but the model said it had done everything asked. The output was right, and the claim was not. Tiny models are not perfect, but can still be incredibly useful in resource-constrained or air-gapped settings.
 
 ## How TinyAgent Works
 
@@ -222,9 +222,9 @@ TinyAgent makes a 6GB GPU usable, but it doesn't change what a small model can h
 That makes a 4B model on a small GPU best suited to focused tasks:
 
 - **Works well:** questions about a specific function, fixing a reported error, small edits, running and interpreting a command, writing new code files
-- **Harder:** summarizing or reviewing large files, and changes that span many files
+- **Harder:** using a 16K context window to summarize or review large files, and changes that span many files
 
-In the example session, the model's summary of `tiny.py` got the structure and most details right, but several specific values were wrong: it said compaction triggers at 90% (it's 80%) and allows 10 handoffs per turn (it's 5). Those settings are defined in a different file the model never read, so it guessed plausible values instead of saying it didn't know. The lesson for small models: trust what they read, and verify specifics they didn't.
+In the example session using a 16K context window, the model's summary of `tiny.py` got the structure and most details right, but several specific values were wrong: it said compaction triggers at 90% (it's 80%) and allows 10 handoffs per turn (it's 5). Those settings are defined in a different file the model never read, so it guessed plausible values instead of saying it didn't know. The lesson for small models: trust what they read, and verify specifics they didn't.
 
 If you have memory to spare, spend it on a larger window first: 32K gives TinyAgent much more room between compactions. A larger model helps after that. On the same 6GB GPU, Gemma 4 E4B runs entirely on the GPU with a 32K window, using about 3.2GB of GPU memory and generating about 25 tokens per second. The main example in this post uses a 16K window even though 32K works, to show TinyAgent under tighter constraints.
 
