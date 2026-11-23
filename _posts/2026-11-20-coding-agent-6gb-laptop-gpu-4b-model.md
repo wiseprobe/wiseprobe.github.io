@@ -9,7 +9,7 @@ Most coding agent harnesses are used with frontier models in the cloud. That isn
 
 On a laptop with an NVIDIA RTX A1000 (6GB of VRAM), Gemma 4 E4B and Qwen3.5 4B served by Ollama both run entirely on the GPU with a 32K or even 16K context window, using about ~4GB of GPU memory and generating about 35 tokens per second. That window is a fraction of the 200K or more that agents are usually designed around.
 
-[PatchPal](https://github.com/amaiya/patchpal) now includes **TinyAgent**, a version of its agent built for this setup Gemma4:E4B. This post explains how to run it, how it works, and what to expect from it.
+[PatchPal](https://github.com/amaiya/patchpal) now includes **TinyAgent**, a version of its agent built for this setup. This post explains how to run it, how it works, and what to expect from it.
 
 ## The Constraints of a Small GPU
 
