@@ -19,7 +19,7 @@ Running an agent on a small GPU means working within two limits at once.
 
 The small window brings its own problems. Every request carries the system prompt, the tool definitions, and space reserved for the model's reply before any conversation is included. With PatchPal's full tool set, that overhead alone is over 9,000 tokens, more than half of a 16K window, and a single file read can take most of the rest. Standard compaction doesn't help much either. PatchPal's normal approach summarizes older messages and keeps the last two turns word for word, and in a 16K window two turns can be the whole conversation.
 
-**A small model.** A 4B model follows instructions more literally than a frontier model, fills gaps in what it knows with plausible guesses, and loses detail when it summarizes. An agent built for it needs its instructions spelled out, and should rely as little as possible on the model remembering things.
+**A small model.** A 4B model follows instructions more literally than a frontier model, fills gaps in what it knows with plausible guesses, and may lose detail when it summarizes. An agent built for it needs its instructions spelled out, and should rely as little as possible on the model remembering things.
 
 Pointing an existing agent harness at a local model doesn't address either limit. Harnesses designed for frontier models assume a large window, and the problems show up as soon as the first large file is read. With a small model, the harness has to adapt instead: how often it compacts, how much one tool call can return, and how explicitly it instructs the model.
 
