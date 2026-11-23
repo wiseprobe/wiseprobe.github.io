@@ -7,7 +7,7 @@ tags: [ai agents, agent harness, local llms, small language models, ollama, patc
 
 Most coding agent harnesses are used with frontier models in the cloud. That isn't always an option: the code may be sensitive, API costs add up, or you want something that runs on the laptop in front of you. Small open models like Gemma 4 E4B and Qwen3.5 4B now handle tool calling well enough to be useful, and they run on modest hardware.
 
-On a laptop with an NVIDIA RTX A1000 (6GB of VRAM), Gemma 4 E4B and Qwen3.5 4B served by Ollama both run entirely on the GPU with a 32K or even 16K context window, using about ~4GB of GPU memory and generating about 35 tokens per second. That window is a fraction of the 200K or more that agents are usually designed around.
+On a laptop with an NVIDIA RTX A1000 (6GB of VRAM), Gemma 4 E4B and Qwen3.5 4B served by Ollama both run entirely on the GPU with a 32K or even 16K context window, using about 4GB of GPU memory and generating about 35 tokens per second at 16K and 25 at 32K. That window is a fraction of the 200K or more that agents are usually designed around, and a larger one doesn't pay off on this GPU: both models slow down sharply as the window fills, and Qwen3.5 4B can't fit much more than 32K on the GPU at all.
 
 [PatchPal](https://github.com/amaiya/patchpal) now includes **TinyAgent**, a version of its agent built for this setup. This post explains how to run it, how it works, and what to expect from it.
 
@@ -15,7 +15,9 @@ On a laptop with an NVIDIA RTX A1000 (6GB of VRAM), Gemma 4 E4B and Qwen3.5 4B s
 
 Running an agent on a small GPU means working within two limits at once.
 
-**A small context window.** Every request carries the system prompt, the tool definitions, and space reserved for the model's reply before any conversation is included. With PatchPal's full tool set, that overhead alone is over 9,000 tokens, more than half of a 16K window, and a single file read can take most of the rest. Standard compaction doesn't help much either. PatchPal's normal approach summarizes older messages and keeps the last two turns word for word, and in a 16K window two turns can be the whole conversation.
+**A small context window.** On a small GPU, a long context is slow even when it fits. Gemma 4 E4B, whose sliding-window attention keeps its memory use low, loads with a 128K window and stays entirely on the 6GB GPU. But in a test with a 100K-token prompt, processing the prompt took over a minute, and the model then generated about 5.5 tokens per second, against about 25 at 32K. At that speed, a few hundred tokens of reasoning and a tool call take about a minute, and an agent takes dozens of these steps per task. Other models don't fit a long window at all. Qwen3.5 4B needs much more memory per token of context, so it fits entirely on the GPU only up to about 32K. At 64K it's already split between GPU and CPU, and at 128K more than half of it runs on the CPU: the same 100K-token prompt took over two minutes to process, and generation dropped to 2.7 tokens per second. Either way, keeping the window at 16K or 32K keeps the agent responsive, and the paper below suggests little accuracy is lost by doing so. Before raising the window, check `ollama ps` to see whether the model is still at 100% GPU.
+
+The small window brings its own problems. Every request carries the system prompt, the tool definitions, and space reserved for the model's reply before any conversation is included. With PatchPal's full tool set, that overhead alone is over 9,000 tokens, more than half of a 16K window, and a single file read can take most of the rest. Standard compaction doesn't help much either. PatchPal's normal approach summarizes older messages and keeps the last two turns word for word, and in a 16K window two turns can be the whole conversation.
 
 **A small model.** A 4B model follows instructions more literally than a frontier model, fills gaps in what it knows with plausible guesses, and loses detail when it summarizes. An agent built for it needs its instructions spelled out, and should rely as little as possible on the model remembering things.
 
@@ -226,7 +228,7 @@ That makes a 4B model on a small GPU best suited to focused tasks:
 
 In the example session using a 16K context window, the model's summary of `tiny.py` got the structure and most details right, but several specific values were wrong: it said compaction triggers at 90% (it's 80%) and allows 10 handoffs per turn (it's 5). Those settings are defined in a different file the model never read, so it guessed plausible values instead of saying it didn't know. The lesson for small models: trust what they read, and verify specifics they didn't.
 
-If you have memory to spare, spend it on a larger window first: 32K gives TinyAgent much more room between compactions. A larger model helps after that. On the same 6GB GPU, Gemma 4 E4B runs entirely on the GPU with a 32K window, using about 3.2GB of GPU memory and generating about 25 tokens per second. The main example in this post uses a 16K window even though 32K works, to show TinyAgent under tighter constraints.
+Within reason, a larger window helps: 32K gives TinyAgent much more room between compactions than 16K, while staying fast. Beyond that, speed drops off steeply as the context fills, so 32K is a good balance on this hardware. A larger model helps after that. On the same 6GB GPU, Gemma 4 E4B runs entirely on the GPU with a 32K window, using about 3.2GB of GPU memory and generating about 25 tokens per second. The main example in this post uses a 16K window even though 32K works, to show TinyAgent under tighter constraints.
 
 Here is the same request with Gemma 4 E4B at 32K:
 
@@ -247,7 +249,7 @@ Agent:
   ...
 ```
 
-With Gemma 4 E4B at 32K, the same request took two reads instead of four, needed no compaction, and the summary contained no wrong values. Rather than guessing the compaction threshold and handoff limit, it named the settings without stating their values. The model changed as well as the window, so this isn't a controlled comparison, but it shows how much a 32K window helps on a 6GB GPU.
+With Gemma 4 E4B at 32K, the same request took two reads instead of four, needed no compaction, and the summary contained no wrong values. Rather than guessing the compaction threshold and handoff limit, it named the settings without stating their values. The model changed as well as the window, so this isn't a controlled comparison, but it shows how much going from 16K to 32K helps.
 
 ## Conclusion
 
