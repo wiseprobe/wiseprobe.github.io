@@ -7,7 +7,7 @@ tags: [ai agents, agent harness, local llms, small language models, ollama, patc
 
 Most coding agent harnesses are used with frontier models in the cloud. That isn't always an option: the code may be sensitive, API costs add up, or you want something that runs on the laptop in front of you. Small open models like Gemma 4 E4B and Qwen3.5 4B now handle tool calling well enough to be useful, and they run on modest hardware.
 
-On a laptop with an NVIDIA RTX A1000 (6GB of VRAM), Gemma 4 E4B and Qwen3.5 4B served by Ollama both run entirely on the GPU with a 32K or even 16K context window, using about 4GB of GPU memory and generating about 35 tokens per second at 16K and 25 at 32K. That window is a fraction of the 200K or more that agents are usually designed around, and a larger one doesn't pay off on this GPU: both models slow down sharply as the window fills, and Qwen3.5 4B can't fit much more than 32K on the GPU at all.
+On a laptop with an NVIDIA RTX A1000 (6GB of VRAM), Gemma 4 E4B and Qwen3.5 4B served by Ollama both run entirely on the GPU with a 32K and below, using about 4GB of GPU memory and generating about 35 tokens per second at 16K and 25 at 32K. That window is a fraction of the 200K or more that agents are usually designed around, and a larger one doesn't pay off on this GPU: both models slow down sharply as the window fills, and Qwen3.5 4B can't fit much more than 32K on the GPU at all.
 
 [PatchPal](https://github.com/amaiya/patchpal) now includes **TinyAgent**, a version of its agent built for this setup. This post explains how to run it, how it works, and what to expect from it.
 
